@@ -6,59 +6,43 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-
 import javax.swing.JPanel;
 
-import miridih.model.CanvasModel;
+import miridih.controller.CanvasController;
 import miridih.objects.Shape;
 import miridih.objects.Tool;
 
 public class Canvas extends JPanel {
-    private final CanvasModel canvasModel;
-    private double startX, startY, endX, endY;
+    private final CanvasController canvasController;
 
-    public Canvas(CanvasModel model) {
-        canvasModel = model;
+    public Canvas(CanvasController controller) {
+        canvasController = controller;
+
+        // 배경 색
         setBackground(Color.WHITE);
+
+        // 마우스 클릭 이벤트
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                
-                startX = e.getX();
-                startY = e.getY();
-                
+                canvasController.mousePressed(e.getX(), e.getY());
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                endX = e.getX();
-                endY = e.getY();
-                System.out.println(canvasModel.getCurrentTool());
-                Shape newShape = new Shape();
-                newShape.setStart(startX, startY);
-                newShape.setEnd(endX, endY);
-                newShape.setTool(canvasModel.getCurrentTool());
-                canvasModel.addShape(newShape);
+                canvasController.mouseReleased(e.getX(), e.getY());
                 repaint(); // 마우스 버튼을 놓을 때 도형 그리기
             }
         });
-
-        
     }
 
-    public void setCurrentTool(Tool tool) {
-        canvasModel.setCurrentTool(tool);
-    }
-
-    
-
-    @Override 
+    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g;
 
-        ArrayList<Shape> shapes = canvasModel.getShapes();
+        ArrayList<Shape> shapes = canvasController.getShapes();
 
         shapes.forEach((shape) -> {
             Tool tool = shape.getTool();
@@ -67,7 +51,7 @@ public class Canvas extends JPanel {
             double endX = shape.getEndX();
             double endY = shape.getEndY();
 
-            switch(tool) {
+            switch (tool) {
                 case RECTANGLE:
                     g2d.drawRect((int) startX, (int) startY, (int) (endX - startX), (int) (endY - startY));
                     break;
