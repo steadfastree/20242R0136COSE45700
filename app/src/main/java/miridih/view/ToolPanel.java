@@ -1,9 +1,10 @@
 package miridih.view;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 
-import miridih.utils.Tool;
+import miridih.objects.Tool;
+
+import java.awt.event.ActionEvent;
 
 public class ToolPanel extends JPanel {
     public ToolPanel(Canvas canvas) {

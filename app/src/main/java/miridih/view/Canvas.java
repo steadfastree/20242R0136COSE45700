@@ -3,16 +3,18 @@ package miridih.view;
 import java.awt.Color;
 import javax.swing.JPanel;
 
-import miridih.utils.Tool;
+import miridih.model.CanvasModel;
+import miridih.objects.Tool;
 
 public class Canvas extends JPanel {
-    private Tool currentTool = Tool.RECTANGLE;
+    private final CanvasModel canvasModel;
 
-    public Canvas() {
+    public Canvas(CanvasModel model) {
+        canvasModel = model;
         setBackground(Color.WHITE);
     }
 
     public void setCurrentTool(Tool tool) {
-        currentTool = tool;
+        canvasModel.setCurrentTool(tool);
     }
 }
