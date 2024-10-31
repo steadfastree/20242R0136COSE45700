@@ -1,4 +1,4 @@
-package app.src.main.java.miridih;
+package miridih;
 
 public class App {
     public String getGreeting() {
