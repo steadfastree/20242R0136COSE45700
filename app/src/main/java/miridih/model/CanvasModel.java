@@ -10,7 +10,19 @@ public class CanvasModel {
     private Shape selectedShape = null;
     private Tool currentTool = null;
 
+    public ArrayList<Shape> getShapes() {
+        return shapes;
+    }
+
     public void setCurrentTool(Tool tool) {
         currentTool = tool;
+    }
+
+    public void addShape(Shape shape) {
+        shapes.add(shape);
+    }
+
+    public Tool getCurrentTool() {
+        return currentTool;
     }
 }

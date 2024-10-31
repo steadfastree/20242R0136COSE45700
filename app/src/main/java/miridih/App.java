@@ -1,6 +1,5 @@
 package miridih;
 
-import miridih.controller.CanvasController;
 import miridih.model.CanvasModel;
 import miridih.view.Canvas;
 import miridih.view.ToolPanel;
