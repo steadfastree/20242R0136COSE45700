@@ -1,11 +1,13 @@
 package miridih;
 
+import java.awt.BorderLayout;
+
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
 import miridih.model.CanvasModel;
 import miridih.view.Canvas;
 import miridih.view.ToolPanel;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class App {
     public static void main(String[] args) {

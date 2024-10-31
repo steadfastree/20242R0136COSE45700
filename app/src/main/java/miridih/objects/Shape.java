@@ -1,11 +1,8 @@
 package miridih.objects;
 
-public class Shape {
+public abstract class Shape {
     private Tool tool;
-    private double startX;
-    private double startY;
-    private double endX;
-    private double endY;
+    private double startX, startY, endX, endY;
 
     public void setStart(double x, double y) {
         startX = x;
@@ -40,6 +37,10 @@ public class Shape {
     public double getEndY() {
         return endY;
     }
+
+    public abstract boolean contains(double x, double y);
+    // public abstract void draw();
 }
+
 
 
