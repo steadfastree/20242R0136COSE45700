@@ -20,7 +20,7 @@ public class CanvasController extends MouseAdapter {
 
     public void mouseReleased(double x, double y) {
         canvasModel.setEnd(x, y);
-        canvasModel.createShape();
+        canvasModel.handleClick(x, y);
     }
 
     public void setCurrentTool(Tool tool) {
