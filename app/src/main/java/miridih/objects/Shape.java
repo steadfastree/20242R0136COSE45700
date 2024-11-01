@@ -3,6 +3,7 @@ package miridih.objects;
 public abstract class Shape {
     private Tool tool;
     private double startX, startY, endX, endY;
+    private double startX, startY, endX, endY;
 
     public void setStart(double x, double y) {
         startX = x;
