@@ -33,14 +33,24 @@ public class Canvas extends JPanel {
                 lastX = e.getX();
                 lastY = e.getY();
 
+                if(canvasController.getCurrentTool() == Tool.SELECT ){
+                    Shape selectedShape = canvasController.getSelectedShape();
+                    if(selectedShape != null && selectedShape.isOnHandle(e.getX(), e.getY())){
+                        isResizing = true;
+                    }
+                    else{
+                        isDragging = true;
+                    }
+                }
                 canvasController.mousePressed(e.getX(), e.getY());
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                
+                isResizing = false;
+                isDragging = false;
                 canvasController.mouseReleased(e.getX(), e.getY());
-                repaint(); // 마우스 버튼을 놓을 때 도형 그리기
+                repaint(); // 마우스 액션 종료
             }
         });
 
@@ -49,10 +59,12 @@ public class Canvas extends JPanel {
             public void mouseDragged(MouseEvent e) {
                 if(canvasController.getCurrentTool() == Tool.SELECT) {
                     if(isResizing){
-
+                        canvasController.resizeSelectedShape(e.getX(), e.getY());
                     }
                     else if(isDragging){
-
+                        canvasController.moveSelectedShape(e.getX() - lastX, e.getY() - lastY);
+                        lastX = e.getX();
+                        lastY = e.getY();
                     }
                     repaint();
                 }
