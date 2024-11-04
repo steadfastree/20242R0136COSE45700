@@ -6,12 +6,17 @@ import java.util.ArrayList;
 import miridih.model.CanvasModel;
 import miridih.objects.Shape;
 import miridih.objects.Tool;
+import miridih.observer.ShapeChangeListener;
 
 public class CanvasController extends MouseAdapter {
     private final CanvasModel canvasModel;
 
     public CanvasController(CanvasModel model) {
         canvasModel = model;
+    }
+
+    public void addShapeChangeListener(ShapeChangeListener listener) {
+        canvasModel.addShapeChangeListener(listener);
     }
 
     public void mousePressed(double x, double y) {
@@ -33,5 +38,9 @@ public class CanvasController extends MouseAdapter {
 
     public ArrayList<Shape> getShapes() {
         return canvasModel.getShapes();
+    }
+
+    public Shape getSelectedShape() {
+        return canvasModel.getSelectedShape();
     }
 }
