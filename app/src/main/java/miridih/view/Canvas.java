@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -15,6 +16,9 @@ import miridih.objects.Tool;
 
 public class Canvas extends JPanel {
     private final CanvasController canvasController;
+    private double lastX, lastY;
+    private boolean isResizing = false;
+    private boolean isDragging = false;
 
     public Canvas(CanvasController controller) {
         canvasController = controller;
@@ -26,15 +30,35 @@ public class Canvas extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                lastX = e.getX();
+                lastY = e.getY();
+
                 canvasController.mousePressed(e.getX(), e.getY());
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
+                
                 canvasController.mouseReleased(e.getX(), e.getY());
                 repaint(); // 마우스 버튼을 놓을 때 도형 그리기
             }
         });
+
+        addMouseMotionListener(new MouseMotionAdapter(){
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                if(canvasController.getCurrentTool() == Tool.SELECT) {
+                    if(isResizing){
+
+                    }
+                    else if(isDragging){
+
+                    }
+                    repaint();
+                }
+            }
+        });
+
     }
 
     @Override

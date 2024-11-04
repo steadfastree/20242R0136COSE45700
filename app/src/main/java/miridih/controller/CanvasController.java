@@ -27,6 +27,10 @@ public class CanvasController extends MouseAdapter {
         canvasModel.setCurrentTool(tool);
     }
 
+    public Tool getCurrentTool() {
+        return canvasModel.getCurrentTool();
+    }
+
     public ArrayList<Shape> getShapes() {
         return canvasModel.getShapes();
     }

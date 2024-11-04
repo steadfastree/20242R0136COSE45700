@@ -22,6 +22,10 @@ public class CanvasModel {
         currentTool = tool;
     }
 
+    public Tool getCurrentTool() {
+        return currentTool;
+    }
+
 
     public void setStart(double x, double y) {
         startX = x;
