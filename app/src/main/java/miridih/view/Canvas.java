@@ -1,5 +1,6 @@
 package miridih.view;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -97,5 +98,22 @@ public class Canvas extends JPanel {
                     break;
             }
         });
+
+        Shape selectedShape = canvasController.getSelectedShape();
+        if(selectedShape != null){
+            drawSelectionBox(g2d, selectedShape);
+            drawHandle(g2d, selectedShape);
+        }
+    }
+
+    public void drawSelectionBox(Graphics2D g2d, Shape selectedShape){
+        g2d.setStroke(new BasicStroke(2));
+        g2d.setColor(Color.BLUE);
+        g2d.drawRect((int)selectedShape.getStartX(), (int)selectedShape.getStartY(), (int)(selectedShape.getEndX() - selectedShape.getStartX()), (int)(selectedShape.getEndY() - selectedShape.getStartY()));
+    }
+
+    public void drawHandle(Graphics2D g2d, Shape selectedShape){
+        g2d.setColor(Color.BLUE);
+        g2d.fillRect((int)selectedShape.getEndX() - 5, (int)selectedShape.getEndY() - 5, 10, 10);
     }
 }
