@@ -10,6 +10,8 @@ import miridih.observer.ShapeChangeListener;
 
 public class CanvasController extends MouseAdapter {
     private final CanvasModel canvasModel;
+    private boolean isResizing = false;
+    private boolean isDragging = false;
 
     public CanvasController(CanvasModel model) {
         canvasModel = model;
@@ -20,16 +22,43 @@ public class CanvasController extends MouseAdapter {
     }
 
     public void mousePressed(double x, double y) {
+        if(getCurrentTool() == Tool.SELECT ){
+            Shape selectedShape = getSelectedShape();
+            if(selectedShape != null && selectedShape.isOnHandle(x, y)){
+                isResizing = true;
+            }
+            else{
+                isDragging = true;
+            }
+        }
+        if(getCurrentTool() == Tool.MULTI_SELECT){
+            isDragging = true;
+        }
         canvasModel.setStart(x, y);
     }
 
     public void mouseReleased(double x, double y) {
+        isResizing = false;
+        isDragging = false;
         canvasModel.setEnd(x, y);
         canvasModel.handleClick(x, y);
     }
 
+    public void mouseDragged(double x, double y, double dx, double dy) {
+        if(isResizing){
+            resizeSelectedShape(x, y);
+        }
+        else if(isDragging){
+            moveSelectedShapes(dx, dy);
+        }
+    }
+
     public void setCurrentTool(Tool tool) {
         canvasModel.setCurrentTool(tool);
+    }
+
+    public Tool getCurrentTool() {
+        return canvasModel.getCurrentTool();
     }
 
     public ArrayList<Shape> getShapes() {
@@ -39,4 +68,18 @@ public class CanvasController extends MouseAdapter {
     public Shape getSelectedShape() {
         return canvasModel.getSelectedShape();
     }
+
+    public ArrayList<Shape> getSelectedShapes() {
+        return canvasModel.getSelectedShapes();
+    }
+
+    public void resizeSelectedShape(double x, double y) {
+        canvasModel.resizeSelectedShape(x, y);
+    }
+
+    public void moveSelectedShapes(double dx, double dy) {
+        canvasModel.moveSelectedShapes(dx, dy);
+    }
+
+    
 }

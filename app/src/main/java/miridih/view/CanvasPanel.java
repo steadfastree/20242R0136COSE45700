@@ -1,11 +1,11 @@
 package miridih.view;
 
+import java.awt.FlowLayout;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import java.awt.FlowLayout;
 
 import miridih.controller.CanvasController;
 import miridih.observer.ShapeChangeListener;
@@ -58,6 +58,11 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener {
             yField.setText(String.valueOf(controller.getSelectedShape().getStartY()));
             widthField.setText(String.valueOf(controller.getSelectedShape().getWidth()));
             heightField.setText(String.valueOf(controller.getSelectedShape().getHeight()));
+        } else {
+            xField.setText("");
+            yField.setText("");
+            widthField.setText("");
+            heightField.setText("");
         }
     }
 }

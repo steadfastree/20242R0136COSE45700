@@ -10,7 +10,7 @@ import miridih.observer.ShapeChangeListener;
 
 public class CanvasModel {
     private ArrayList<Shape> shapes = new ArrayList<Shape>();
-    private Shape selectedShape = null;
+    private ArrayList<Shape> selectedShapes = new ArrayList<Shape>();
     private Tool currentTool = Tool.SELECT;
 
     private List<ShapeChangeListener> listeners = new ArrayList<>();
@@ -37,8 +37,16 @@ public class CanvasModel {
     }
 
     public void setCurrentTool(Tool tool) {
+        if (currentTool != tool) {
+            selectedShapes.clear();
+        }
         currentTool = tool;
     }
+
+    public Tool getCurrentTool() {
+        return currentTool;
+    }
+
 
     public void setStart(double x, double y) {
         startX = x;
@@ -51,15 +59,37 @@ public class CanvasModel {
     }
 
     public void handleClick(double x, double y) {
+        Shape clickedShape = clickShape(x, y);
         if (currentTool == Tool.SELECT) {
-            selectedShape = selectShape(x, y);
-            System.out.println(selectedShape.getEndX());
-        } else {
+            // 빈 공간을 클릭한 경우
+            if (clickedShape == null) {
+                selectedShapes.clear();
+                notifyShapeChanged();
+            }
+            // 새로운 도형을 클릭한 경우
+            else if (!selectedShapes.contains(clickedShape)) {
+                selectedShapes.clear();
+                selectedShapes.add(clickedShape);
+                notifyShapeChanged();
+            }
+            // 현재 선택된 도형을 다시 클릭한 경우는 아무 동작 하지 않음
+        } 
+        else if(currentTool == Tool.MULTI_SELECT){
+            if(clickedShape != null){
+                if(selectedShapes.contains(clickedShape)){
+                    selectedShapes.remove(clickedShape);
+                }
+                else{
+                    selectedShapes.add(clickedShape);
+                }
+            }
+        }
+        else {
             createShape();
         }
     }
 
-    public Shape selectShape(double x, double y) {
+    public Shape clickShape(double x, double y) {
         for (int i = shapes.size() - 1; i >= 0; i--) {
             Shape shape = shapes.get(i);
             if (shape.contains(x, y)) {
@@ -71,17 +101,37 @@ public class CanvasModel {
 
     public void createShape() {
         Shape newShape = ShapeFactory.createShape(currentTool);
-        newShape.setStart(startX, startY);
-        newShape.setEnd(endX, endY);
+        newShape.setStart(Math.min(startX, endX), Math.min(startY, endY));
+        newShape.setEnd(Math.max(startX, endX), Math.max(startY, endY));
         if (currentTool != null) {
             newShape.setTool(currentTool);
             shapes.add(newShape);
-            selectedShape = newShape;
+            setCurrentTool(Tool.SELECT);
+            selectedShapes.add(newShape);
             notifyShapeChanged();
         }
     }
 
     public Shape getSelectedShape() {
-        return selectedShape;
+        return selectedShapes.isEmpty() ? null : selectedShapes.get(0);
+    }
+
+    public ArrayList<Shape> getSelectedShapes() {
+        return selectedShapes;
+    }
+
+    public void moveSelectedShapes(double dx, double dy) {
+        for(Shape shape : selectedShapes){
+            shape.move(dx, dy);
+        }
+        notifyShapeChanged();
+    }
+
+    public void resizeSelectedShape(double x, double y) {
+        Shape selectedShape = getSelectedShape();
+        if(selectedShape != null){
+            selectedShape.setEnd(x, y);
+            notifyShapeChanged();
+        }
     }
 }
