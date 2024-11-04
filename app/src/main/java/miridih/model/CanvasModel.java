@@ -10,7 +10,7 @@ import miridih.observer.ShapeChangeListener;
 
 public class CanvasModel {
     private ArrayList<Shape> shapes = new ArrayList<Shape>();
-    private Shape selectedShape = null;
+    private ArrayList<Shape> selectedShapes = new ArrayList<Shape>();
     private Tool currentTool = Tool.SELECT;
 
     private List<ShapeChangeListener> listeners = new ArrayList<>();
@@ -56,10 +56,25 @@ public class CanvasModel {
     }
 
     public void handleClick(double x, double y) {
+        Shape selectedShape = selectShape(x, y);
         if (currentTool == Tool.SELECT) {
-            selectedShape = selectShape(x, y);
-            System.out.println(selectedShape.getEndX());
-        } else {
+            selectedShapes.clear();
+            if(selectedShape != null){
+                selectedShapes.add(selectedShape);
+            }
+            
+        } 
+        else if(currentTool == Tool.MULTI_SELECT){
+            if(selectedShape != null){
+                if(selectedShapes.contains(selectedShape)){
+                    selectedShapes.remove(selectedShape);
+                }
+                else{
+                    selectedShapes.add(selectedShape);
+                }
+            }
+        }
+        else {
             createShape();
         }
     }
@@ -81,25 +96,37 @@ public class CanvasModel {
         if (currentTool != null) {
             newShape.setTool(currentTool);
             shapes.add(newShape);
-            selectedShape = newShape;
+            selectedShapes.add(newShape);
+            setCurrentTool(Tool.SELECT);
             notifyShapeChanged();
         }
     }
 
     public Shape getSelectedShape() {
-        return selectedShape;
+        return selectedShapes.get(0);
+    }
+
+    public ArrayList<Shape> getSelectedShapes() {
+        return selectedShapes;
     }
 
     public void moveSelectedShape(double dx, double dy) {
-        if (selectedShape != null) {
-            selectedShape.move(dx, dy);
+        if (selectedShapes.get(0) != null) {
+            selectedShapes.get(0).move(dx, dy);
             notifyShapeChanged();
         }
     }
 
+    public void moveSelectedShapes(double dx, double dy) {
+        for(Shape shape : selectedShapes){
+            shape.move(dx, dy);
+        }
+        notifyShapeChanged();
+    }
+
     public void resizeSelectedShape(double x, double y) {
-        if(selectedShape != null){
-            selectedShape.setEnd(x, y);
+        if(selectedShapes.get(0) != null){
+            selectedShapes.get(0).setEnd(x, y);
             notifyShapeChanged();
         }
     }

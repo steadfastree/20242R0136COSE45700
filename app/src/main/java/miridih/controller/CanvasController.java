@@ -44,11 +44,19 @@ public class CanvasController extends MouseAdapter {
         return canvasModel.getSelectedShape();
     }
 
+    public ArrayList<Shape> getSelectedShapes() {
+        return canvasModel.getSelectedShapes();
+    }
+
     public void resizeSelectedShape(double x, double y) {
         canvasModel.resizeSelectedShape(x, y);
     }
 
     public void moveSelectedShape(double dx, double dy) {
         canvasModel.moveSelectedShape(dx, dy);
+    }
+
+    public void moveSelectedShapes(double dx, double dy) {
+        canvasModel.moveSelectedShapes(dx, dy);
     }
 }

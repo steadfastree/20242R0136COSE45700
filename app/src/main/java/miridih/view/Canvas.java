@@ -43,6 +43,10 @@ public class Canvas extends JPanel {
                         isDragging = true;
                     }
                 }
+                if(canvasController.getCurrentTool() == Tool.MULTI_SELECT){
+                    isDragging = true;
+                }
+                
                 canvasController.mousePressed(e.getX(), e.getY());
             }
 
@@ -58,17 +62,20 @@ public class Canvas extends JPanel {
         addMouseMotionListener(new MouseMotionAdapter(){
             @Override
             public void mouseDragged(MouseEvent e) {
-                if(canvasController.getCurrentTool() == Tool.SELECT) {
-                    if(isResizing){
-                        canvasController.resizeSelectedShape(e.getX(), e.getY());
-                    }
-                    else if(isDragging){
-                        canvasController.moveSelectedShape(e.getX() - lastX, e.getY() - lastY);
-                        lastX = e.getX();
-                        lastY = e.getY();
-                    }
-                    repaint();
+
+                if(isResizing){
+                    canvasController.resizeSelectedShape(e.getX(), e.getY());
                 }
+                else if(isDragging && (canvasController.getCurrentTool() == Tool.MULTI_SELECT || 
+                        canvasController.getCurrentTool() == Tool.SELECT)){
+                    canvasController.moveSelectedShapes(e.getX() - lastX, e.getY() - lastY);
+                    lastX = e.getX();
+                    lastY = e.getY();
+                }
+                repaint();
+                
+                    
+                
             }
         });
 
@@ -99,10 +106,10 @@ public class Canvas extends JPanel {
             }
         });
 
-        Shape selectedShape = canvasController.getSelectedShape();
-        if(selectedShape != null){
-            drawSelectionBox(g2d, selectedShape);
-            drawHandle(g2d, selectedShape);
+        ArrayList<Shape> selectedShapes = canvasController.getSelectedShapes();
+        for(Shape shape : selectedShapes){
+            drawSelectionBox(g2d, shape);
+            drawHandle(g2d, shape);
         }
     }
 
