@@ -19,10 +19,10 @@ public class ToolPanel extends JPanel {
         JButton selectButton = new JButton("Select");
 
         // 도구 선택 리스터 추가
-        
         rectangleButton.addActionListener((ActionEvent e) -> controller.setCurrentTool(Tool.RECTANGLE));
         ellipseButton.addActionListener((ActionEvent e) -> controller.setCurrentTool(Tool.ELLIPSE));
         selectButton.addActionListener((ActionEvent e) -> controller.setCurrentTool(Tool.SELECT));
+
         // 패널에 버튼 추가
         toolPanel.add(rectangleButton);
         toolPanel.add(ellipseButton);

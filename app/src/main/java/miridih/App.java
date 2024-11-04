@@ -8,6 +8,7 @@ import javax.swing.SwingUtilities;
 import miridih.controller.CanvasController;
 import miridih.model.CanvasModel;
 import miridih.view.Canvas;
+import miridih.view.CanvasPanel;
 import miridih.view.ToolPanel;
 
 public class App {
@@ -26,8 +27,11 @@ public class App {
 
             // 패널
             ToolPanel toolPanel = new ToolPanel(canvasController);
+            CanvasPanel canvasPanel = new CanvasPanel(canvasController);
+            canvasController.addShapeChangeListener(canvasPanel);
 
             frame.add(toolPanel, BorderLayout.WEST);
+            frame.add(canvasPanel, BorderLayout.EAST);
             frame.setVisible(true);
         });
     }
