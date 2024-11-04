@@ -37,8 +37,8 @@ public class CanvasModel {
     }
 
     public void setCurrentTool(Tool tool) {
-        if(tool == Tool.SELECT){
-            selectedShapes.clear(); //SELECT를 선택하면 단일 선택을 위해 비우기
+        if (currentTool != tool) {
+            selectedShapes.clear();
         }
         currentTool = tool;
     }
@@ -59,21 +59,28 @@ public class CanvasModel {
     }
 
     public void handleClick(double x, double y) {
-        Shape selectedShape = selectShape(x, y);
+        Shape clickedShape = clickShape(x, y);
         if (currentTool == Tool.SELECT) {
-            selectedShapes.clear();
-            if(selectedShape != null){
-                selectedShapes.add(selectedShape);
+            // 빈 공간을 클릭한 경우
+            if (clickedShape == null) {
+                selectedShapes.clear();
+                notifyShapeChanged();
             }
-            
+            // 새로운 도형을 클릭한 경우
+            else if (!selectedShapes.contains(clickedShape)) {
+                selectedShapes.clear();
+                selectedShapes.add(clickedShape);
+                notifyShapeChanged();
+            }
+            // 현재 선택된 도형을 다시 클릭한 경우는 아무 동작 하지 않음
         } 
         else if(currentTool == Tool.MULTI_SELECT){
-            if(selectedShape != null){
-                if(selectedShapes.contains(selectedShape)){
-                    selectedShapes.remove(selectedShape);
+            if(clickedShape != null){
+                if(selectedShapes.contains(clickedShape)){
+                    selectedShapes.remove(clickedShape);
                 }
                 else{
-                    selectedShapes.add(selectedShape);
+                    selectedShapes.add(clickedShape);
                 }
             }
         }
@@ -82,7 +89,7 @@ public class CanvasModel {
         }
     }
 
-    public Shape selectShape(double x, double y) {
+    public Shape clickShape(double x, double y) {
         for (int i = shapes.size() - 1; i >= 0; i--) {
             Shape shape = shapes.get(i);
             if (shape.contains(x, y)) {
@@ -99,25 +106,18 @@ public class CanvasModel {
         if (currentTool != null) {
             newShape.setTool(currentTool);
             shapes.add(newShape);
-            selectedShapes.add(newShape);
             setCurrentTool(Tool.SELECT);
+            selectedShapes.add(newShape);
             notifyShapeChanged();
         }
     }
 
     public Shape getSelectedShape() {
-        return selectedShapes.get(0);
+        return selectedShapes.isEmpty() ? null : selectedShapes.get(0);
     }
 
     public ArrayList<Shape> getSelectedShapes() {
         return selectedShapes;
-    }
-
-    public void moveSelectedShape(double dx, double dy) {
-        if (selectedShapes.get(0) != null) {
-            selectedShapes.get(0).move(dx, dy);
-            notifyShapeChanged();
-        }
     }
 
     public void moveSelectedShapes(double dx, double dy) {
@@ -128,8 +128,9 @@ public class CanvasModel {
     }
 
     public void resizeSelectedShape(double x, double y) {
-        if(selectedShapes.get(0) != null){
-            selectedShapes.get(0).setEnd(x, y);
+        Shape selectedShape = getSelectedShape();
+        if(selectedShape != null){
+            selectedShape.setEnd(x, y);
             notifyShapeChanged();
         }
     }
