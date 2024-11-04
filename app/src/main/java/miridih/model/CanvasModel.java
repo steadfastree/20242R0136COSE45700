@@ -93,14 +93,14 @@ public class CanvasModel {
     public void moveSelectedShape(double dx, double dy) {
         if (selectedShape != null) {
             selectedShape.move(dx, dy);
-            // notifyShapeChanged();
+            notifyShapeChanged();
         }
     }
 
     public void resizeSelectedShape(double x, double y) {
         if(selectedShape != null){
             selectedShape.setEnd(x, y);
-            // notifyShapeChanged();
+            notifyShapeChanged();
         }
     }
 }
