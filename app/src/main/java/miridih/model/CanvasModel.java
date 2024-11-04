@@ -76,8 +76,8 @@ public class CanvasModel {
 
     public void createShape() {
         Shape newShape = ShapeFactory.createShape(currentTool);
-        newShape.setStart(startX, startY);
-        newShape.setEnd(endX, endY);
+        newShape.setStart(Math.min(startX, endX), Math.min(startY, endY));
+        newShape.setEnd(Math.max(startX, endX), Math.max(startY, endY));
         if (currentTool != null) {
             newShape.setTool(currentTool);
             shapes.add(newShape);
