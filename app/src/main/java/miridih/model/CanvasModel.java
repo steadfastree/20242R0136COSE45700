@@ -37,6 +37,9 @@ public class CanvasModel {
     }
 
     public void setCurrentTool(Tool tool) {
+        if(tool == Tool.SELECT){
+            selectedShapes.clear(); //SELECT를 선택하면 단일 선택을 위해 비우기
+        }
         currentTool = tool;
     }
 

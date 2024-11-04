@@ -33,27 +33,11 @@ public class Canvas extends JPanel {
             public void mousePressed(MouseEvent e) {
                 lastX = e.getX();
                 lastY = e.getY();
-
-                if(canvasController.getCurrentTool() == Tool.SELECT ){
-                    Shape selectedShape = canvasController.getSelectedShape();
-                    if(selectedShape != null && selectedShape.isOnHandle(e.getX(), e.getY())){
-                        isResizing = true;
-                    }
-                    else{
-                        isDragging = true;
-                    }
-                }
-                if(canvasController.getCurrentTool() == Tool.MULTI_SELECT){
-                    isDragging = true;
-                }
-                
                 canvasController.mousePressed(e.getX(), e.getY());
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                isResizing = false;
-                isDragging = false;
                 canvasController.mouseReleased(e.getX(), e.getY());
                 repaint(); // 마우스 액션 종료
             }

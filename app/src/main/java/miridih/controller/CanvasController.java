@@ -10,6 +10,8 @@ import miridih.observer.ShapeChangeListener;
 
 public class CanvasController extends MouseAdapter {
     private final CanvasModel canvasModel;
+    private boolean isResizing = false;
+    private boolean isDragging = false;
 
     public CanvasController(CanvasModel model) {
         canvasModel = model;
@@ -20,10 +22,24 @@ public class CanvasController extends MouseAdapter {
     }
 
     public void mousePressed(double x, double y) {
+        if(getCurrentTool() == Tool.SELECT ){
+            Shape selectedShape = getSelectedShape();
+            if(selectedShape != null && selectedShape.isOnHandle(x, y)){
+                isResizing = true;
+            }
+            else{
+                isDragging = true;
+            }
+        }
+        if(getCurrentTool() == Tool.MULTI_SELECT){
+            isDragging = true;
+        }
         canvasModel.setStart(x, y);
     }
 
     public void mouseReleased(double x, double y) {
+        isResizing = false;
+        isDragging = false;
         canvasModel.setEnd(x, y);
         canvasModel.handleClick(x, y);
     }
