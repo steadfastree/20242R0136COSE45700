@@ -7,6 +7,7 @@ import miridih.model.CanvasModel;
 import miridih.objects.Shape;
 import miridih.objects.Tool;
 import miridih.observer.ShapeChangeListener;
+import miridih.observer.ToolChangeListener;
 
 public class CanvasController extends MouseAdapter {
     private final CanvasModel canvasModel;
@@ -19,6 +20,10 @@ public class CanvasController extends MouseAdapter {
 
     public void addShapeChangeListener(ShapeChangeListener listener) {
         canvasModel.addShapeChangeListener(listener);
+    }
+
+    public void addToolChangeListener(ToolChangeListener listener) {
+        canvasModel.addToolChangeListener(listener);
     }
 
     public void mousePressed(double x, double y) {

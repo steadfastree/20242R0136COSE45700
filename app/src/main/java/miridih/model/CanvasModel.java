@@ -7,13 +7,15 @@ import miridih.factory.ShapeFactory;
 import miridih.objects.Shape;
 import miridih.objects.Tool;
 import miridih.observer.ShapeChangeListener;
+import miridih.observer.ToolChangeListener;
 
 public class CanvasModel {
     private ArrayList<Shape> shapes = new ArrayList<Shape>();
     private ArrayList<Shape> selectedShapes = new ArrayList<Shape>();
     private Tool currentTool = Tool.SELECT;
 
-    private List<ShapeChangeListener> listeners = new ArrayList<>();
+    private List<ShapeChangeListener> shapeChangeListeners = new ArrayList<>();
+    private ArrayList<ToolChangeListener> toolChangeListeners = new ArrayList<>();
 
     // 그리고 있는 도형의 좌표
     private double startX, startY, endX, endY;
@@ -23,16 +25,26 @@ public class CanvasModel {
     }
 
     public void addShapeChangeListener(ShapeChangeListener listener) {
-        listeners.add(listener);
+        shapeChangeListeners.add(listener);
     }
 
     public void removeShapeChangeListener(ShapeChangeListener listener) {
-        listeners.remove(listener);
+        shapeChangeListeners.remove(listener);
     }
 
     private void notifyShapeChanged() {
-        for (ShapeChangeListener listener : listeners) {
+        for (ShapeChangeListener listener : shapeChangeListeners) {
             listener.onShapeChanged();
+        }
+    }
+
+    public void addToolChangeListener(ToolChangeListener listener) {
+        toolChangeListeners.add(listener);
+    }
+
+    private void notifyToolChanged() {
+        for (ToolChangeListener listener : toolChangeListeners) {
+            listener.onToolChanged(currentTool);
         }
     }
 
@@ -41,6 +53,7 @@ public class CanvasModel {
             selectedShapes.clear();
         }
         currentTool = tool;
+        notifyToolChanged();
     }
 
     public Tool getCurrentTool() {
@@ -103,6 +116,7 @@ public class CanvasModel {
             newShape.setTool(currentTool);
             shapes.add(newShape);
             setCurrentTool(Tool.SELECT);
+            selectedShapes.clear();
             selectedShapes.add(newShape);
             notifyShapeChanged();
         }
