@@ -14,14 +14,15 @@ import javax.swing.JPanel;
 import miridih.controller.CanvasController;
 import miridih.objects.Shape;
 import miridih.objects.Tool;
+import miridih.observer.ShapeChangeListener;
 
-public class Canvas extends JPanel {
+public class Canvas extends JPanel implements ShapeChangeListener {
     private final CanvasController canvasController;
     private double lastX, lastY;
 
     public Canvas(CanvasController controller) {
         canvasController = controller;
-
+        canvasController.addShapeChangeListener(this);
         // 배경 색
         setBackground(Color.WHITE);
 
@@ -37,7 +38,6 @@ public class Canvas extends JPanel {
             @Override
             public void mouseReleased(MouseEvent e) {
                 canvasController.mouseReleased(e.getX(), e.getY());
-                repaint(); // 마우스 액션 종료
             }
         });
 
@@ -51,7 +51,6 @@ public class Canvas extends JPanel {
                         e.getY() - lastY);
                 lastX = e.getX();
                 lastY = e.getY();
-                repaint();
             }
         });
 
@@ -112,5 +111,10 @@ public class Canvas extends JPanel {
     public void drawHandle(Graphics2D g2d, Shape selectedShape) {
         g2d.setColor(Color.BLUE);
         g2d.fillRect((int) selectedShape.getEndX() - 3, (int) selectedShape.getEndY() - 3, 6, 6);
+    }
+
+    @Override
+    public void onShapeChanged() {
+        repaint();
     }
 }
