@@ -89,4 +89,12 @@ public class CanvasController {
             canvasModel.updateShape(selectedShape, x, y, width, height);
         }
     }
+
+    public void bringToFront(Shape shape) {
+        canvasModel.bringToFront(shape);
+    }
+
+    public void sendToBack(Shape shape) {
+        canvasModel.sendToBack(shape);
+    }
 }

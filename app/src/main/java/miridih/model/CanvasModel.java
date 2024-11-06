@@ -149,4 +149,16 @@ public class CanvasModel {
         shape.setEnd(x + width, y + height);
         notifyShapeChanged();
     }
+
+    public void bringToFront(Shape shape) {
+        shapes.remove(shape);
+        shapes.add(shape);
+        notifyShapeChanged();
+    }
+
+    public void sendToBack(Shape shape) {
+        shapes.remove(shape);
+        shapes.add(0, shape);
+        notifyShapeChanged();
+    }
 }
