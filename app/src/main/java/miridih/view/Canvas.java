@@ -78,11 +78,18 @@ public class Canvas extends JPanel {
         double startY = shape.getStartY();
         double endX = shape.getEndX();
         double endY = shape.getEndY();
+        
         switch (tool) {
             case RECTANGLE:
+                g2d.setColor(Color.WHITE);
+                g2d.fillRect((int) startX, (int) startY, (int) (endX - startX), (int) (endY - startY));
+                g2d.setColor(Color.BLACK);
                 g2d.drawRect((int) startX, (int) startY, (int) (endX - startX), (int) (endY - startY));
                 break;
             case ELLIPSE:
+                g2d.setColor(Color.WHITE);
+                g2d.fillOval((int) startX, (int) startY, (int) (endX - startX), (int) (endY - startY));
+                g2d.setColor(Color.BLACK);
                 g2d.drawOval((int) startX, (int) startY, (int) (endX - startX), (int) (endY - startY));
                 break;
             case MULTI_SELECT:

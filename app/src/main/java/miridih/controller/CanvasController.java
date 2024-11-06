@@ -1,6 +1,5 @@
 package miridih.controller;
 
-import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 
 import miridih.model.CanvasModel;
@@ -9,7 +8,7 @@ import miridih.objects.Tool;
 import miridih.observer.ShapeChangeListener;
 import miridih.observer.ToolChangeListener;
 
-public class CanvasController extends MouseAdapter {
+public class CanvasController {
     private final CanvasModel canvasModel;
     private boolean isResizing = false;
     private boolean isDragging = false;
