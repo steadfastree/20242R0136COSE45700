@@ -7,6 +7,7 @@ import miridih.model.CanvasModel;
 import miridih.objects.Shape;
 import miridih.objects.Tool;
 import miridih.observer.ShapeChangeListener;
+import miridih.observer.ToolChangeListener;
 
 public class CanvasController extends MouseAdapter {
     private final CanvasModel canvasModel;
@@ -21,17 +22,20 @@ public class CanvasController extends MouseAdapter {
         canvasModel.addShapeChangeListener(listener);
     }
 
+    public void addToolChangeListener(ToolChangeListener listener) {
+        canvasModel.addToolChangeListener(listener);
+    }
+
     public void mousePressed(double x, double y) {
-        if(getCurrentTool() == Tool.SELECT ){
+        if (getCurrentTool() == Tool.SELECT) {
             Shape selectedShape = getSelectedShape();
-            if(selectedShape != null && selectedShape.isOnHandle(x, y)){
+            if (selectedShape != null && selectedShape.isOnHandle(x, y)) {
                 isResizing = true;
-            }
-            else{
+            } else {
                 isDragging = true;
             }
         }
-        if(getCurrentTool() == Tool.MULTI_SELECT){
+        if (getCurrentTool() == Tool.MULTI_SELECT) {
             isDragging = true;
         }
         canvasModel.setStart(x, y);
@@ -45,10 +49,9 @@ public class CanvasController extends MouseAdapter {
     }
 
     public void mouseDragged(double x, double y, double dx, double dy) {
-        if(isResizing){
+        if (isResizing) {
             resizeSelectedShape(x, y);
-        }
-        else if(isDragging){
+        } else if (isDragging) {
             moveSelectedShapes(dx, dy);
         }
     }
@@ -81,5 +84,10 @@ public class CanvasController extends MouseAdapter {
         canvasModel.moveSelectedShapes(dx, dy);
     }
 
-    
+    public void updateSelectedShape(double x, double y, double width, double height) {
+        Shape selectedShape = getSelectedShape();
+        if (selectedShape != null) {
+            canvasModel.updateShape(selectedShape, x, y, width, height);
+        }
+    }
 }

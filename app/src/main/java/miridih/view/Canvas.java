@@ -41,15 +41,14 @@ public class Canvas extends JPanel {
             }
         });
 
-        addMouseMotionListener(new MouseMotionAdapter(){
+        addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
                 canvasController.mouseDragged(
-                    e.getX(), 
-                    e.getY(),
-                    e.getX() - lastX,
-                    e.getY() - lastY
-                );
+                        e.getX(),
+                        e.getY(),
+                        e.getX() - lastX,
+                        e.getY() - lastY);
                 lastX = e.getX();
                 lastY = e.getY();
                 repaint();
@@ -67,13 +66,13 @@ public class Canvas extends JPanel {
 
         shapes.forEach((shape) -> drawShape(g2d, shape));
         ArrayList<Shape> selectedShapes = canvasController.getSelectedShapes();
-        for(Shape shape : selectedShapes){
+        for (Shape shape : selectedShapes) {
             drawSelectionBox(g2d, shape);
             drawHandle(g2d, shape);
         }
     }
 
-    public void drawShape(Graphics2D g2d, Shape shape){
+    public void drawShape(Graphics2D g2d, Shape shape) {
         Tool tool = shape.getTool();
         double startX = shape.getStartX();
         double startY = shape.getStartY();
@@ -86,17 +85,25 @@ public class Canvas extends JPanel {
             case ELLIPSE:
                 g2d.drawOval((int) startX, (int) startY, (int) (endX - startX), (int) (endY - startY));
                 break;
+            case MULTI_SELECT:
+                break;
+            case SELECT:
+                break;
+            default:
+                break;
         }
     }
 
-    public void drawSelectionBox(Graphics2D g2d, Shape selectedShape){
+    public void drawSelectionBox(Graphics2D g2d, Shape selectedShape) {
         g2d.setStroke(new BasicStroke(1));
         g2d.setColor(Color.BLUE);
-        g2d.drawRect((int)selectedShape.getStartX(), (int)selectedShape.getStartY(), (int)(selectedShape.getEndX() - selectedShape.getStartX()), (int)(selectedShape.getEndY() - selectedShape.getStartY()));
+        g2d.drawRect((int) selectedShape.getStartX(), (int) selectedShape.getStartY(),
+                (int) (selectedShape.getEndX() - selectedShape.getStartX()),
+                (int) (selectedShape.getEndY() - selectedShape.getStartY()));
     }
 
-    public void drawHandle(Graphics2D g2d, Shape selectedShape){
+    public void drawHandle(Graphics2D g2d, Shape selectedShape) {
         g2d.setColor(Color.BLUE);
-        g2d.fillRect((int)selectedShape.getEndX() - 3, (int)selectedShape.getEndY() - 3, 6, 6);
+        g2d.fillRect((int) selectedShape.getEndX() - 3, (int) selectedShape.getEndY() - 3, 6, 6);
     }
 }

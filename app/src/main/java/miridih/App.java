@@ -27,7 +27,7 @@ public class App {
 
             // 패널
             ToolPanel toolPanel = new ToolPanel(canvasController);
-            CanvasPanel canvasPanel = new CanvasPanel(canvasController);
+            CanvasPanel canvasPanel = new CanvasPanel(canvasController, canvas);
             canvasController.addShapeChangeListener(canvasPanel);
 
             frame.add(toolPanel, BorderLayout.WEST);

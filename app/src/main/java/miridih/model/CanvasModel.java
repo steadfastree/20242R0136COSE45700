@@ -7,13 +7,15 @@ import miridih.factory.ShapeFactory;
 import miridih.objects.Shape;
 import miridih.objects.Tool;
 import miridih.observer.ShapeChangeListener;
+import miridih.observer.ToolChangeListener;
 
 public class CanvasModel {
     private ArrayList<Shape> shapes = new ArrayList<Shape>();
     private ArrayList<Shape> selectedShapes = new ArrayList<Shape>();
     private Tool currentTool = Tool.SELECT;
 
-    private List<ShapeChangeListener> listeners = new ArrayList<>();
+    private List<ShapeChangeListener> shapeChangeListeners = new ArrayList<>();
+    private ArrayList<ToolChangeListener> toolChangeListeners = new ArrayList<>();
 
     // 그리고 있는 도형의 좌표
     private double startX, startY, endX, endY;
@@ -23,16 +25,26 @@ public class CanvasModel {
     }
 
     public void addShapeChangeListener(ShapeChangeListener listener) {
-        listeners.add(listener);
+        shapeChangeListeners.add(listener);
     }
 
     public void removeShapeChangeListener(ShapeChangeListener listener) {
-        listeners.remove(listener);
+        shapeChangeListeners.remove(listener);
     }
 
     private void notifyShapeChanged() {
-        for (ShapeChangeListener listener : listeners) {
+        for (ShapeChangeListener listener : shapeChangeListeners) {
             listener.onShapeChanged();
+        }
+    }
+
+    public void addToolChangeListener(ToolChangeListener listener) {
+        toolChangeListeners.add(listener);
+    }
+
+    private void notifyToolChanged() {
+        for (ToolChangeListener listener : toolChangeListeners) {
+            listener.onToolChanged(currentTool);
         }
     }
 
@@ -41,12 +53,12 @@ public class CanvasModel {
             selectedShapes.clear();
         }
         currentTool = tool;
+        notifyToolChanged();
     }
 
     public Tool getCurrentTool() {
         return currentTool;
     }
-
 
     public void setStart(double x, double y) {
         startX = x;
@@ -73,18 +85,15 @@ public class CanvasModel {
                 notifyShapeChanged();
             }
             // 현재 선택된 도형을 다시 클릭한 경우는 아무 동작 하지 않음
-        } 
-        else if(currentTool == Tool.MULTI_SELECT){
-            if(clickedShape != null){
-                if(selectedShapes.contains(clickedShape)){
+        } else if (currentTool == Tool.MULTI_SELECT) {
+            if (clickedShape != null) {
+                if (selectedShapes.contains(clickedShape)) {
                     selectedShapes.remove(clickedShape);
-                }
-                else{
+                } else {
                     selectedShapes.add(clickedShape);
                 }
             }
-        }
-        else {
+        } else {
             createShape();
         }
     }
@@ -107,6 +116,7 @@ public class CanvasModel {
             newShape.setTool(currentTool);
             shapes.add(newShape);
             setCurrentTool(Tool.SELECT);
+            selectedShapes.clear();
             selectedShapes.add(newShape);
             notifyShapeChanged();
         }
@@ -121,7 +131,7 @@ public class CanvasModel {
     }
 
     public void moveSelectedShapes(double dx, double dy) {
-        for(Shape shape : selectedShapes){
+        for (Shape shape : selectedShapes) {
             shape.move(dx, dy);
         }
         notifyShapeChanged();
@@ -129,9 +139,15 @@ public class CanvasModel {
 
     public void resizeSelectedShape(double x, double y) {
         Shape selectedShape = getSelectedShape();
-        if(selectedShape != null){
+        if (selectedShape != null) {
             selectedShape.setEnd(x, y);
             notifyShapeChanged();
         }
+    }
+
+    public void updateShape(Shape shape, double x, double y, double width, double height) {
+        shape.setStart(x, y);
+        shape.setEnd(x + width, y + height);
+        notifyShapeChanged();
     }
 }
