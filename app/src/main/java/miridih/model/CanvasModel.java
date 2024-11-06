@@ -76,13 +76,11 @@ public class CanvasModel {
             // 빈 공간을 클릭한 경우
             if (clickedShape == null) {
                 selectedShapes.clear();
-                notifyShapeChanged();
             }
             // 새로운 도형을 클릭한 경우
             else if (!selectedShapes.contains(clickedShape)) {
                 selectedShapes.clear();
                 selectedShapes.add(clickedShape);
-                notifyShapeChanged();
             }
             // 현재 선택된 도형을 다시 클릭한 경우는 아무 동작 하지 않음
         } else if (currentTool == Tool.MULTI_SELECT) {
@@ -96,6 +94,7 @@ public class CanvasModel {
         } else {
             createShape();
         }
+        notifyShapeChanged();
     }
 
     public Shape clickShape(double x, double y) {
@@ -148,6 +147,18 @@ public class CanvasModel {
     public void updateShape(Shape shape, double x, double y, double width, double height) {
         shape.setStart(x, y);
         shape.setEnd(x + width, y + height);
+        notifyShapeChanged();
+    }
+
+    public void bringToFront(Shape shape) {
+        shapes.remove(shape);
+        shapes.add(shape);
+        notifyShapeChanged();
+    }
+
+    public void sendToBack(Shape shape) {
+        shapes.remove(shape);
+        shapes.add(0, shape);
         notifyShapeChanged();
     }
 }
