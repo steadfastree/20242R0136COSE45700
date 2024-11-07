@@ -1,16 +1,16 @@
 package miridih.view;
 
-import java.awt.FlowLayout;
+import miridih.command.CanvasPanelCommand;
+import miridih.controller.CanvasController;
+import miridih.objects.Shape;
+import miridih.observer.ShapeChangeListener;
 
+import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import miridih.controller.CanvasController;
-import miridih.objects.Shape;
-import miridih.observer.ShapeChangeListener;
 
 public class CanvasPanel extends JPanel implements ShapeChangeListener {
     private JTextField xField;
@@ -18,10 +18,12 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener {
     private JTextField widthField;
     private JTextField heightField;
 
+    private CanvasPanelCommand command;
     private CanvasController controller;
     private Canvas canvas;
 
     public CanvasPanel(CanvasController controller, Canvas canvas) {
+        this.command = new CanvasPanelCommand(controller);
         this.controller = controller;
         this.canvas = canvas;
         controller.addShapeChangeListener(this);
@@ -40,8 +42,8 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener {
         yField.addActionListener(e -> updateShapeFromPanel());
         widthField.addActionListener(e -> updateShapeFromPanel());
         heightField.addActionListener(e -> updateShapeFromPanel());
-        bringToFrontBtn.addActionListener(e -> bringToFront());
-        sendToBackBtn.addActionListener(e -> sendToBack());
+        bringToFrontBtn.addActionListener(e -> command.bringToFront());
+        sendToBackBtn.addActionListener(e -> command.sendToBack());
 
         canvasPanel.add(xField.getParent());
         canvasPanel.add(yField.getParent());
@@ -67,7 +69,7 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener {
         return textField;
     }
 
-    private void updateShapeFromPanel() {
+    public void updateShapeFromPanel() {
         Shape selectedShape = controller.getSelectedShape();
         if (selectedShape != null) {
             try {
@@ -82,16 +84,6 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener {
                 System.out.println("Invalid input.");
             }
         }
-    }
-
-    private void bringToFront() {
-        Shape selectedShape = controller.getSelectedShape();
-        controller.bringToFront(selectedShape);
-    }
-
-    private void sendToBack() {
-        Shape selectedShape = controller.getSelectedShape();
-        controller.sendToBack(selectedShape);
     }
 
     @Override
