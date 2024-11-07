@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import miridih.controller.CanvasController;
+import miridih.controller.state.Tool;
 import miridih.objects.Shape;
-import miridih.objects.Tool;
 import miridih.observer.ShapeChangeListener;
 
 public class Canvas extends JPanel implements ShapeChangeListener {

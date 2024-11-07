@@ -1,5 +1,7 @@
 package miridih.objects;
 
+import miridih.controller.state.Tool;
+
 public abstract class Shape {
     private Tool tool;
     private double startX, startY, endX, endY;

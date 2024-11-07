@@ -3,9 +3,9 @@ package miridih.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import miridih.controller.state.Tool;
 import miridih.factory.ShapeFactory;
 import miridih.objects.Shape;
-import miridih.objects.Tool;
 import miridih.observer.ShapeChangeListener;
 import miridih.observer.ToolChangeListener;
 

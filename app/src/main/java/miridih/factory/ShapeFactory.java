@@ -1,9 +1,9 @@
 package miridih.factory;
 
+import miridih.controller.state.Tool;
 import miridih.objects.EllipseShape;
 import miridih.objects.RectangleShape;
 import miridih.objects.Shape;
-import miridih.objects.Tool;
 
 public class ShapeFactory {
   public static Shape createShape(Tool tool) {

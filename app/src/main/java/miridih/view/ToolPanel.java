@@ -7,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import miridih.controller.CanvasController;
-import miridih.objects.Tool;
+import miridih.controller.state.Tool;
 import miridih.observer.ToolChangeListener;
 
 public class ToolPanel extends JPanel implements ToolChangeListener {

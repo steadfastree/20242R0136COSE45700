@@ -2,9 +2,10 @@ package miridih.controller;
 
 import java.util.ArrayList;
 
+import miridih.controller.state.Tool;
+import miridih.controller.state.ToolState;
 import miridih.model.CanvasModel;
 import miridih.objects.Shape;
-import miridih.objects.Tool;
 import miridih.observer.ShapeChangeListener;
 import miridih.observer.ToolChangeListener;
 
@@ -12,6 +13,7 @@ public class CanvasController {
     private final CanvasModel canvasModel;
     private boolean isResizing = false;
     private boolean isDragging = false;
+    private ToolState currentToolState;
 
     public CanvasController(CanvasModel model) {
         canvasModel = model;
@@ -26,6 +28,7 @@ public class CanvasController {
     }
 
     public void mousePressed(double x, double y) {
+
         if (getCurrentTool() == Tool.SELECT) {
             Shape selectedShape = getSelectedShape();
             if (selectedShape != null && selectedShape.isOnHandle(x, y)) {
