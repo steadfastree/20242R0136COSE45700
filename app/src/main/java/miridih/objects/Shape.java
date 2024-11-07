@@ -1,5 +1,7 @@
 package miridih.objects;
 
+import java.awt.Graphics2D;
+
 public abstract class Shape {
     private Tool tool;
     private double startX, startY, endX, endY;
@@ -39,7 +41,8 @@ public abstract class Shape {
     }
 
     public abstract boolean contains(double x, double y);
-    // public abstract void draw();
+
+    public abstract void draw(Graphics2D g2d);
 
     public void move(double dx, double dy) {
         startX += dx;
@@ -50,7 +53,7 @@ public abstract class Shape {
 
     public boolean isOnHandle(double x, double y) { // 해당 포인트가 끝점 주변 5px 이내에 있는지 확인
         return Math.abs(x - endX) <= 5 && Math.abs(y - endY) <= 5;
-        
+
     }
 
     public double getWidth() {
