@@ -11,8 +11,8 @@ import miridih.observer.ToolChangeListener;
 
 public class CanvasController {
     private final CanvasModel canvasModel;
-    private boolean isResizing = false;
-    private boolean isDragging = false;
+    public boolean isResizing = false;
+    public boolean isDragging = false;
     private ToolState currentToolState;
 
     public CanvasController(CanvasModel model) {
@@ -28,34 +28,15 @@ public class CanvasController {
     }
 
     public void mousePressed(double x, double y) {
-
-        if (getCurrentTool() == Tool.SELECT) {
-            Shape selectedShape = getSelectedShape();
-            if (selectedShape != null && selectedShape.isOnHandle(x, y)) {
-                isResizing = true;
-            } else {
-                isDragging = true;
-            }
-        }
-        if (getCurrentTool() == Tool.MULTI_SELECT) {
-            isDragging = true;
-        }
-        canvasModel.setStart(x, y);
+        currentToolState.mousePressed(x, y);
     }
 
     public void mouseReleased(double x, double y) {
-        isResizing = false;
-        isDragging = false;
-        canvasModel.setEnd(x, y);
-        canvasModel.handleClick(x, y);
+        currentToolState.mouseReleased(x, y);
     }
 
     public void mouseDragged(double x, double y, double dx, double dy) {
-        if (isResizing) {
-            resizeSelectedShape(x, y);
-        } else if (isDragging) {
-            moveSelectedShapes(dx, dy);
-        }
+        currentToolState.mouseDragged(x, y, dx, dy);
     }
 
     public void setCurrentTool(Tool tool) {

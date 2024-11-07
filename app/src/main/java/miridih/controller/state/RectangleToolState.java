@@ -10,16 +10,17 @@ public class RectangleToolState extends ToolState {
 
     @Override
     public void mousePressed(double x, double y) {
-        System.out.println("RectangleToolState mousePressed");
+        canvasModel.setStart(x,y);
     }
 
     @Override
     public void mouseReleased(double x, double y) {
-        System.out.println("RectangleToolState mouseReleased");
+        canvasModel.setEnd(x,y);
+        canvasModel.createShape();
     }
 
     @Override
-    public void mouseDragged(double x, double y) {
-        System.out.println("RectangleToolState mouseDragged");
+    public void mouseDragged(double x, double y, double dx, double dy) {
+        System.out.println(" RectangleToolState mouseDragged");
     }
 }

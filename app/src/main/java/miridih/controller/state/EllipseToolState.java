@@ -3,6 +3,7 @@ package miridih.controller.state;
 import miridih.controller.CanvasController;
 import miridih.model.CanvasModel;
 
+
 public class EllipseToolState extends ToolState {
     public EllipseToolState(CanvasController canvasController, CanvasModel canvasModel) {
         super(canvasController, canvasModel);
@@ -10,16 +11,17 @@ public class EllipseToolState extends ToolState {
 
     @Override
     public void mousePressed(double x, double y) {
-        System.out.println("EllipseToolState mousePressed");
+        canvasModel.setStart(x,y);
     }
 
     @Override
     public void mouseReleased(double x, double y) {
-        System.out.println("EllipseToolState mouseReleased");
+        canvasModel.setEnd(x,y);
+        canvasModel.createShape();
     }
 
     @Override
-    public void mouseDragged(double x, double y) {
+    public void mouseDragged(double x, double y, double dx, double dy) {
         System.out.println("EllipseToolState mouseDragged");
     }
 }
