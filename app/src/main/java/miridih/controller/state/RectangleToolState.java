@@ -1,7 +1,5 @@
 package miridih.controller.state;
 
-import java.awt.Rectangle;
-
 import miridih.controller.CanvasController;
 import miridih.factory.RectangleFactory;
 import miridih.model.CanvasModel;

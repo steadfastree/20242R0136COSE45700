@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miridih.controller.state.Tool;
-import miridih.factory.ShapeFactory;
 import miridih.objects.Shape;
 import miridih.observer.ShapeChangeListener;
 import miridih.observer.ToolChangeListener;
@@ -97,7 +96,6 @@ public class CanvasModel {
                 }
             }
         } else {
-            createShape();
         }
         notifyShapeChanged();
     }
@@ -110,19 +108,6 @@ public class CanvasModel {
             }
         }
         return null;
-    }
-
-    public void createShape() {
-        Shape newShape = ShapeFactory.createShape(currentTool);
-        newShape.setStart(Math.min(startX, endX), Math.min(startY, endY));
-        newShape.setEnd(Math.max(startX, endX), Math.max(startY, endY));
-        if (currentTool != null) {
-            shapes.add(newShape);
-            setCurrentTool(Tool.SELECT);
-            selectedShapes.clear();
-            selectedShapes.add(newShape);
-            notifyShapeChanged();
-        }
     }
 
     public double getStartX() {
