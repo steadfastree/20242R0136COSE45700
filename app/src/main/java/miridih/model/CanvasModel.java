@@ -112,7 +112,6 @@ public class CanvasModel {
         newShape.setStart(Math.min(startX, endX), Math.min(startY, endY));
         newShape.setEnd(Math.max(startX, endX), Math.max(startY, endY));
         if (currentTool != null) {
-            newShape.setTool(currentTool);
             shapes.add(newShape);
             setCurrentTool(Tool.SELECT);
             selectedShapes.clear();

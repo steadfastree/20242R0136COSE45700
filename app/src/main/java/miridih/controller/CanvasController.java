@@ -2,6 +2,10 @@ package miridih.controller;
 
 import java.util.ArrayList;
 
+import miridih.controller.state.EllipseToolState;
+import miridih.controller.state.MultiSelectToolState;
+import miridih.controller.state.RectangleToolState;
+import miridih.controller.state.SelectToolState;
 import miridih.controller.state.Tool;
 import miridih.controller.state.ToolState;
 import miridih.model.CanvasModel;
@@ -27,6 +31,8 @@ public class CanvasController {
         canvasModel.addToolChangeListener(listener);
     }
 
+    // 마우스 이벤트 처리
+
     public void mousePressed(double x, double y) {
         currentToolState.mousePressed(x, y);
     }
@@ -39,14 +45,26 @@ public class CanvasController {
         currentToolState.mouseDragged(x, y, dx, dy);
     }
 
+    // 상태 변경
+
     public void setCurrentTool(Tool tool) {
-        canvasModel.setCurrentTool(tool);
+        switch (tool) {
+            case RECTANGLE:
+                currentToolState = new RectangleToolState(this, canvasModel);
+                break;
+            case ELLIPSE:
+                currentToolState = new EllipseToolState(this, canvasModel);
+                break;
+            case MULTI_SELECT:
+                currentToolState = new MultiSelectToolState(this, canvasModel);
+                break;
+            case SELECT:
+                currentToolState = new SelectToolState(this, canvasModel);
+                break;
+        }
     }
 
-    public Tool getCurrentTool() {
-        return canvasModel.getCurrentTool();
-    }
-
+    // 도형 접근
     public ArrayList<Shape> getShapes() {
         return canvasModel.getShapes();
     }
@@ -59,14 +77,18 @@ public class CanvasController {
         return canvasModel.getSelectedShapes();
     }
 
+    // 도형 크기 변경
     public void resizeSelectedShape(double x, double y) {
         canvasModel.resizeSelectedShape(x, y);
     }
 
+
+    // 도형 이동
     public void moveSelectedShapes(double dx, double dy) {
         canvasModel.moveSelectedShapes(dx, dy);
     }
 
+    // 도형 업데이트
     public void updateSelectedShape(double x, double y, double width, double height) {
         Shape selectedShape = getSelectedShape();
         if (selectedShape != null) {
@@ -74,6 +96,7 @@ public class CanvasController {
         }
     }
 
+    // 도형 순서 변경
     public void bringToFront(Shape shape) {
         canvasModel.bringToFront(shape);
     }
