@@ -24,6 +24,11 @@ public class CanvasModel {
         return shapes;
     }
 
+    public void addShape(Shape shape) {
+        shapes.add(shape);
+        notifyShapeChanged(); 
+    }
+
     public void addShapeChangeListener(ShapeChangeListener listener) {
         shapeChangeListeners.add(listener);
     }
@@ -70,7 +75,7 @@ public class CanvasModel {
         endY = y;
     }
 
-    public void handleClick(double x, double y) {
+    public void handleClick(double x, double y) { //마우스 이벤트 처리가 state에서 이루어지도록.
         Shape clickedShape = clickShape(x, y);
         if (currentTool == Tool.SELECT) {
             // 빈 공간을 클릭한 경우
@@ -118,6 +123,22 @@ public class CanvasModel {
             selectedShapes.add(newShape);
             notifyShapeChanged();
         }
+    }
+
+    public double getStartX() {
+        return startX;
+    }
+
+    public double getStartY() {
+        return startY;
+    }
+
+    public double getEndX() {
+        return endX;
+    }
+
+    public double getEndY() {
+        return endY;
     }
 
     public Shape getSelectedShape() {
