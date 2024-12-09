@@ -2,25 +2,30 @@ package miridih.controller;
 
 import java.util.ArrayList;
 
+import miridih.common.manager.SelectionManager;
 import miridih.controller.state.EllipseToolState;
-import miridih.controller.state.MultiSelectToolState;
 import miridih.controller.state.RectangleToolState;
 import miridih.controller.state.SelectToolState;
 import miridih.controller.state.Tool;
 import miridih.controller.state.ToolState;
 import miridih.model.CanvasModel;
 import miridih.model.objects.Shape;
+import miridih.observer.SelectionChangeListener;
 import miridih.observer.ShapeChangeListener;
 import miridih.observer.ToolChangeListener;
 
 public class CanvasController {
     private final CanvasModel canvasModel;
+    private final SelectionManager selectionManager = SelectionManager.getInstance();
     public boolean isResizing = false;
-    public boolean isDragging = false; // Resize, Dragging 여부는 State로 관리
     private ToolState currentToolState;
 
     public CanvasController(CanvasModel model) {
         canvasModel = model;
+    }
+
+    public void addSelectionChangeListener(SelectionChangeListener listener) {
+        selectionManager.addSelectionChangeListener(listener);
     }
 
     public void addShapeChangeListener(ShapeChangeListener listener) {
@@ -47,13 +52,13 @@ public class CanvasController {
 
     // 키보드 이벤트 처리
 
-    public void keyPressed(int keyCode) {
-        currentToolState.keyPressed(keyCode);
-      }
+    // public void keyPressed(int keyCode) {
+    //     currentToolState.keyPressed(keyCode);
+    //   }
   
-      public void keyReleased(int keyCode) {
-        currentToolState.keyReleased(keyCode);
-      }
+    //   public void keyReleased(int keyCode) {
+    //     currentToolState.keyReleased(keyCode);
+    //   }
 
     // 상태 변경
 
@@ -65,9 +70,6 @@ public class CanvasController {
                 break;
             case ELLIPSE:
                 currentToolState = new EllipseToolState(this, canvasModel);
-                break;
-            case MULTI_SELECT:
-                currentToolState = new MultiSelectToolState(this, canvasModel);
                 break;
             case SELECT:
                 currentToolState = new SelectToolState(this, canvasModel);

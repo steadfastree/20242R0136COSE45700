@@ -33,7 +33,7 @@ public class ToolPanel extends JPanel implements ToolChangeListener {
 
         // Add buttons to the panel
         toolPanel.add(selectButton);
-        toolPanel.add(multiSelectButton);
+        // toolPanel.add(multiSelectButton);
         toolPanel.add(rectangleButton);
         toolPanel.add(ellipseButton);
         this.add(toolPanel);

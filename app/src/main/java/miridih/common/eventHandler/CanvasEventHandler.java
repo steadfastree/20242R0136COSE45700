@@ -1,7 +1,5 @@
 package miridih.common.eventHandler;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -40,19 +38,19 @@ public class CanvasEventHandler {
     };
   }
 
-  public KeyAdapter getKeyAdapter() {
-    return new KeyAdapter() {
-      @Override
-      public void keyPressed(KeyEvent e) {
-        System.out.println("key pressed" + e.getKeyCode());
-        canvasController.keyPressed(e.getKeyCode());
-      }
+  // public KeyAdapter getKeyAdapter() {
+  //   return new KeyAdapter() {
+  //     @Override
+  //     public void keyPressed(KeyEvent e) {
+  //       System.out.println("key pressed" + e.getKeyCode());
+  //       canvasController.keyPressed(e.getKeyCode());
+  //     }
 
-      @Override
-      public void keyReleased(KeyEvent e) {
-        System.out.println("key released" + e.getKeyCode());
-        canvasController.keyReleased(e.getKeyCode());
-      }
-    };
-  }
+  //     @Override
+  //     public void keyReleased(KeyEvent e) {
+  //       System.out.println("key released" + e.getKeyCode());
+  //       canvasController.keyReleased(e.getKeyCode());
+  //     }
+  //   };
+  // }
 }

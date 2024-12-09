@@ -9,9 +9,10 @@ import javax.swing.JPanel;
 import miridih.command.CanvasCommand;
 import miridih.common.eventHandler.CanvasEventHandler;
 import miridih.controller.CanvasController;
+import miridih.observer.SelectionChangeListener;
 import miridih.observer.ShapeChangeListener;
 
-public class Canvas extends JPanel implements ShapeChangeListener {
+public class Canvas extends JPanel implements ShapeChangeListener, SelectionChangeListener {
     private final CanvasCommand canvasCommand;
     private final CanvasController canvasController;
     private final CanvasEventHandler canvasEventHandler;
@@ -23,15 +24,14 @@ public class Canvas extends JPanel implements ShapeChangeListener {
         canvasEventHandler = new CanvasEventHandler(controller);
 
         canvasController.addShapeChangeListener(this);
+        canvasController.addSelectionChangeListener(this);
         // 배경 색
         setBackground(Color.WHITE);
 
         // 마우스 클릭 이벤트
+        
         addMouseListener(canvasEventHandler.getMouseAdapter());
         addMouseMotionListener(canvasEventHandler.getMouseAdapter());
-        addKeyListener(canvasEventHandler.getKeyAdapter());
-        setFocusable(true);
-        requestFocusInWindow();
 
     
     }
@@ -48,6 +48,11 @@ public class Canvas extends JPanel implements ShapeChangeListener {
 
     @Override
     public void onShapeChanged() {
+        repaint();
+    }
+
+    @Override
+    public void onSelectionChanged() {
         repaint();
     }
 }
