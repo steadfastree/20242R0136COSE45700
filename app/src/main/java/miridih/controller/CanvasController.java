@@ -16,7 +16,7 @@ import miridih.observer.ToolChangeListener;
 public class CanvasController {
     private final CanvasModel canvasModel;
     public boolean isResizing = false;
-    public boolean isDragging = false;
+    public boolean isDragging = false; // Resize, Dragging 여부는 State로 관리
     private ToolState currentToolState;
 
     public CanvasController(CanvasModel model) {
