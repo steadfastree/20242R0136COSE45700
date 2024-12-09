@@ -1,4 +1,4 @@
-package miridih.objects;
+package miridih.model.objects;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;

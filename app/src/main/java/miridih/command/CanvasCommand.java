@@ -1,12 +1,12 @@
 package miridih.command;
 
-import miridih.controller.CanvasController;
-import miridih.objects.Shape;
-
-import java.util.ArrayList;
-import java.awt.Graphics2D;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.util.ArrayList;
+
+import miridih.controller.CanvasController;
+import miridih.model.objects.Shape;
 
 public class CanvasCommand implements CanvasCommandInterface {
     CanvasController controller;

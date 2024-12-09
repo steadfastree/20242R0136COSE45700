@@ -1,6 +1,6 @@
-package miridih.controller;
+package miridih.common.manager;
 
-import miridih.objects.CompositeShape;
+import miridih.model.objects.CompositeShape;
 
 public class SelectionManager {
   private final CompositeShape selectedShapes = new CompositeShape();

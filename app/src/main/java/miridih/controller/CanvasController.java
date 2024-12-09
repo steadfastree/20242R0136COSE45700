@@ -9,7 +9,7 @@ import miridih.controller.state.SelectToolState;
 import miridih.controller.state.Tool;
 import miridih.controller.state.ToolState;
 import miridih.model.CanvasModel;
-import miridih.objects.Shape;
+import miridih.model.objects.Shape;
 import miridih.observer.ShapeChangeListener;
 import miridih.observer.ToolChangeListener;
 
@@ -45,9 +45,20 @@ public class CanvasController {
         currentToolState.mouseDragged(x, y, dx, dy);
     }
 
+    // 키보드 이벤트 처리
+
+    public void keyPressed(int keyCode) {
+        currentToolState.keyPressed(keyCode);
+      }
+  
+      public void keyReleased(int keyCode) {
+        currentToolState.keyReleased(keyCode);
+      }
+
     // 상태 변경
 
     public void setCurrentTool(Tool tool) {
+        System.out.println("setCurrentTool: " + tool);
         switch (tool) {
             case RECTANGLE:
                 currentToolState = new RectangleToolState(this, canvasModel);
@@ -104,4 +115,6 @@ public class CanvasController {
     public void sendToBack(Shape shape) {
         canvasModel.sendToBack(shape);
     }
+
+    
 }

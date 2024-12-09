@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import miridih.controller.state.Tool;
-import miridih.objects.Shape;
+import miridih.model.objects.Shape;
 import miridih.observer.ShapeChangeListener;
 import miridih.observer.ToolChangeListener;
 

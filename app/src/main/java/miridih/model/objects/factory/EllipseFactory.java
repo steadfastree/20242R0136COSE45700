@@ -1,7 +1,7 @@
-package miridih.factory;
+package miridih.model.objects.factory;
 
-import miridih.objects.EllipseShape;
-import miridih.objects.Shape;
+import miridih.model.objects.EllipseShape;
+import miridih.model.objects.Shape;
 
 public class EllipseFactory implements ShapeFactory {
 

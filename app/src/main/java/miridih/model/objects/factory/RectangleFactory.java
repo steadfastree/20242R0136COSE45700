@@ -1,7 +1,7 @@
-package miridih.factory;
+package miridih.model.objects.factory;
 
-import miridih.objects.RectangleShape;
-import miridih.objects.Shape;
+import miridih.model.objects.RectangleShape;
+import miridih.model.objects.Shape;
 
 public class RectangleFactory implements ShapeFactory {
 

@@ -2,7 +2,7 @@ package miridih.view;
 
 import miridih.command.CanvasPanelCommand;
 import miridih.controller.CanvasController;
-import miridih.objects.Shape;
+import miridih.model.objects.Shape;
 import miridih.observer.ShapeChangeListener;
 
 import java.awt.FlowLayout;

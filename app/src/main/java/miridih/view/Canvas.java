@@ -3,56 +3,37 @@ package miridih.view;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.JPanel;
 
 import miridih.command.CanvasCommand;
+import miridih.common.eventHandler.CanvasEventHandler;
 import miridih.controller.CanvasController;
 import miridih.observer.ShapeChangeListener;
 
 public class Canvas extends JPanel implements ShapeChangeListener {
     private final CanvasCommand canvasCommand;
     private final CanvasController canvasController;
-    private double lastX, lastY;
+    private final CanvasEventHandler canvasEventHandler;
+    
 
     public Canvas(CanvasController controller) {
         canvasController = controller;
         canvasCommand = new CanvasCommand(controller);
+        canvasEventHandler = new CanvasEventHandler(controller);
 
         canvasController.addShapeChangeListener(this);
         // 배경 색
         setBackground(Color.WHITE);
 
         // 마우스 클릭 이벤트
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                canvasController.mousePressed(e.getX(), e.getY());
-                lastX = e.getX();
-                lastY = e.getY();
-            }
+        addMouseListener(canvasEventHandler.getMouseAdapter());
+        addMouseMotionListener(canvasEventHandler.getMouseAdapter());
+        addKeyListener(canvasEventHandler.getKeyAdapter());
+        setFocusable(true);
+        requestFocusInWindow();
 
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                canvasController.mouseReleased(e.getX(), e.getY());
-            }
-        });
-
-        addMouseMotionListener(new MouseMotionAdapter() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                canvasController.mouseDragged(
-                        e.getX(),
-                        e.getY(),
-                        e.getX() - lastX,
-                        e.getY() - lastY);
-                lastX = e.getX();
-                lastY = e.getY();
-            }
-        });
+    
     }
 
     @Override

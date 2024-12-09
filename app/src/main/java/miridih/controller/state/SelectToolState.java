@@ -1,10 +1,11 @@
 package miridih.controller.state;
 
 import java.util.ArrayList;
+import java.awt.event.KeyEvent;
 
 import miridih.controller.CanvasController;
 import miridih.model.CanvasModel;
-import miridih.objects.Shape;
+import miridih.model.objects.Shape;
 
 public class SelectToolState extends ToolState {
     public SelectToolState(CanvasController canvasController, CanvasModel canvasModel) {
@@ -44,6 +45,19 @@ public class SelectToolState extends ToolState {
       else if(canvasController.isResizing) {
         canvasModel.resizeSelectedShape(dx, dy);
       }
+    }
+
+    @Override
+    public void keyPressed(int keyCode) {
+        if (keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_META) {
+            canvasController.setCurrentTool(Tool.MULTI_SELECT);
+            System.out.println("set to multi select");
+        }
+    }
+
+    @Override
+    public void keyReleased(int keyCode) {
+        
     }
 }
 

@@ -1,10 +1,10 @@
 package miridih.controller.state;
 
 import miridih.controller.CanvasController;
-import miridih.factory.EllipseFactory;
-import miridih.factory.RectangleFactory;
 import miridih.model.CanvasModel;
-import miridih.objects.Shape;
+import miridih.model.objects.factory.EllipseFactory;
+import miridih.model.objects.factory.RectangleFactory;
+import miridih.model.objects.Shape;
 
 
 public class EllipseToolState extends ToolState {
@@ -34,5 +34,15 @@ public class EllipseToolState extends ToolState {
     @Override
     public void mouseDragged(double x, double y, double dx, double dy) {
         System.out.println("EllipseToolState mouseDragged");
+    }
+
+    @Override
+    public void keyPressed(int keyCode) {
+        System.out.println("EllipseToolState keyPressed");
+    }
+
+    @Override
+    public void keyReleased(int keyCode) {
+        System.out.println("EllipseToolState keyReleased");
     }
 }

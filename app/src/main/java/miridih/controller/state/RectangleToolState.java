@@ -1,9 +1,9 @@
 package miridih.controller.state;
 
 import miridih.controller.CanvasController;
-import miridih.factory.RectangleFactory;
 import miridih.model.CanvasModel;
-import miridih.objects.Shape;
+import miridih.model.objects.factory.RectangleFactory;
+import miridih.model.objects.Shape;
 
 public class RectangleToolState extends ToolState {
     public RectangleToolState(CanvasController canvasController, CanvasModel canvasModel) {
@@ -32,6 +32,16 @@ public class RectangleToolState extends ToolState {
 
     @Override
     public void mouseDragged(double x, double y, double dx, double dy) {
-        System.out.println(" RectangleToolState mouseDragged");
+        
+    }
+
+    @Override
+    public void keyPressed(int keyCode) {
+        System.out.println("RectangleToolState keyPressed");
+    }
+
+    @Override
+    public void keyReleased(int keyCode) {
+        System.out.println("RectangleToolState keyReleased");
     }
 }

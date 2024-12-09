@@ -1,7 +1,7 @@
 package miridih.command;
 
 import miridih.controller.CanvasController;
-import miridih.objects.Shape;
+import miridih.model.objects.Shape;
 
 public class CanvasPanelCommand implements CanvasPanelCommandInterface {
     CanvasController controller;
