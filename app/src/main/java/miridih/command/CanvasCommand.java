@@ -1,15 +1,17 @@
 package miridih.command;
 
-import miridih.controller.CanvasController;
-import miridih.objects.Shape;
-
-import java.util.ArrayList;
-import java.awt.Graphics2D;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.util.ArrayList;
+
+import miridih.common.manager.SelectionManager;
+import miridih.controller.CanvasController;
+import miridih.model.objects.Shape;
 
 public class CanvasCommand implements CanvasCommandInterface {
     CanvasController controller;
+    SelectionManager selectionManager = SelectionManager.getInstance();
 
     public CanvasCommand(CanvasController controller) {
         this.controller = controller;
@@ -24,7 +26,7 @@ public class CanvasCommand implements CanvasCommandInterface {
 
     @Override
     public void drawSelectedShapes(Graphics2D g2d) {
-        ArrayList<Shape> selectedShapes = controller.getSelectedShapes();
+        ArrayList<Shape> selectedShapes = selectionManager.getSelectedShapes().getChildren();
         for (Shape shape : selectedShapes) {
             drawSelectionBox(g2d, shape);
             drawHandle(g2d, shape);

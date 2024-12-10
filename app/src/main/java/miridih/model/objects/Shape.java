@@ -1,9 +1,8 @@
-package miridih.objects;
+package miridih.model.objects;
 
 import java.awt.Graphics2D;
 
 public abstract class Shape {
-    private Tool tool;
     private double startX, startY, endX, endY;
 
     public void setStart(double x, double y) {
@@ -14,14 +13,6 @@ public abstract class Shape {
     public void setEnd(double x, double y) {
         endX = x;
         endY = y;
-    }
-
-    public void setTool(Tool tool) {
-        this.tool = tool;
-    }
-
-    public Tool getTool() {
-        return tool;
     }
 
     public double getStartX() {

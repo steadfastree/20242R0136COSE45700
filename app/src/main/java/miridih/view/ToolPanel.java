@@ -2,12 +2,13 @@ package miridih.view;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import miridih.controller.CanvasController;
-import miridih.objects.Tool;
+import miridih.controller.state.Tool;
 import miridih.observer.ToolChangeListener;
 
 public class ToolPanel extends JPanel implements ToolChangeListener {
@@ -32,7 +33,7 @@ public class ToolPanel extends JPanel implements ToolChangeListener {
 
         // Add buttons to the panel
         toolPanel.add(selectButton);
-        toolPanel.add(multiSelectButton);
+        // toolPanel.add(multiSelectButton);
         toolPanel.add(rectangleButton);
         toolPanel.add(ellipseButton);
         this.add(toolPanel);

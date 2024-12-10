@@ -2,19 +2,30 @@ package miridih.controller;
 
 import java.util.ArrayList;
 
+import miridih.common.manager.SelectionManager;
+import miridih.controller.state.EllipseToolState;
+import miridih.controller.state.RectangleToolState;
+import miridih.controller.state.SelectToolState;
+import miridih.controller.state.Tool;
+import miridih.controller.state.ToolState;
 import miridih.model.CanvasModel;
-import miridih.objects.Shape;
-import miridih.objects.Tool;
+import miridih.model.objects.Shape;
+import miridih.observer.SelectionChangeListener;
 import miridih.observer.ShapeChangeListener;
 import miridih.observer.ToolChangeListener;
 
 public class CanvasController {
     private final CanvasModel canvasModel;
-    private boolean isResizing = false;
-    private boolean isDragging = false;
+    private final SelectionManager selectionManager = SelectionManager.getInstance();
+    public boolean isResizing = false;
+    private ToolState currentToolState;
 
     public CanvasController(CanvasModel model) {
         canvasModel = model;
+    }
+
+    public void addSelectionChangeListener(SelectionChangeListener listener) {
+        selectionManager.addSelectionChangeListener(listener);
     }
 
     public void addShapeChangeListener(ShapeChangeListener listener) {
@@ -25,44 +36,48 @@ public class CanvasController {
         canvasModel.addToolChangeListener(listener);
     }
 
+    // 마우스 이벤트 처리
+
     public void mousePressed(double x, double y) {
-        if (getCurrentTool() == Tool.SELECT) {
-            Shape selectedShape = getSelectedShape();
-            if (selectedShape != null && selectedShape.isOnHandle(x, y)) {
-                isResizing = true;
-            } else {
-                isDragging = true;
-            }
-        }
-        if (getCurrentTool() == Tool.MULTI_SELECT) {
-            isDragging = true;
-        }
-        canvasModel.setStart(x, y);
+        currentToolState.mousePressed(x, y);
     }
 
     public void mouseReleased(double x, double y) {
-        isResizing = false;
-        isDragging = false;
-        canvasModel.setEnd(x, y);
-        canvasModel.handleClick(x, y);
+        currentToolState.mouseReleased(x, y);
     }
 
     public void mouseDragged(double x, double y, double dx, double dy) {
-        if (isResizing) {
-            resizeSelectedShape(x, y);
-        } else if (isDragging) {
-            moveSelectedShapes(dx, dy);
+        currentToolState.mouseDragged(x, y, dx, dy);
+    }
+
+    // 키보드 이벤트 처리
+
+    // public void keyPressed(int keyCode) {
+    //     currentToolState.keyPressed(keyCode);
+    //   }
+  
+    //   public void keyReleased(int keyCode) {
+    //     currentToolState.keyReleased(keyCode);
+    //   }
+
+    // 상태 변경
+
+    public void setCurrentTool(Tool tool) {
+        System.out.println("setCurrentTool: " + tool);
+        switch (tool) {
+            case RECTANGLE:
+                currentToolState = new RectangleToolState(this, canvasModel);
+                break;
+            case ELLIPSE:
+                currentToolState = new EllipseToolState(this, canvasModel);
+                break;
+            case SELECT:
+                currentToolState = new SelectToolState(this, canvasModel);
+                break;
         }
     }
 
-    public void setCurrentTool(Tool tool) {
-        canvasModel.setCurrentTool(tool);
-    }
-
-    public Tool getCurrentTool() {
-        return canvasModel.getCurrentTool();
-    }
-
+    // 도형 접근
     public ArrayList<Shape> getShapes() {
         return canvasModel.getShapes();
     }
@@ -75,14 +90,18 @@ public class CanvasController {
         return canvasModel.getSelectedShapes();
     }
 
+    // 도형 크기 변경
     public void resizeSelectedShape(double x, double y) {
         canvasModel.resizeSelectedShape(x, y);
     }
 
+
+    // 도형 이동
     public void moveSelectedShapes(double dx, double dy) {
         canvasModel.moveSelectedShapes(dx, dy);
     }
 
+    // 도형 업데이트
     public void updateSelectedShape(double x, double y, double width, double height) {
         Shape selectedShape = getSelectedShape();
         if (selectedShape != null) {
@@ -90,6 +109,7 @@ public class CanvasController {
         }
     }
 
+    // 도형 순서 변경
     public void bringToFront(Shape shape) {
         canvasModel.bringToFront(shape);
     }
@@ -97,4 +117,6 @@ public class CanvasController {
     public void sendToBack(Shape shape) {
         canvasModel.sendToBack(shape);
     }
+
+    
 }
