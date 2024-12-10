@@ -14,7 +14,9 @@ public class MultiSelectedState extends ToolState {
 
     @Override
     public void mousePressed(double x, double y) {
+        canvasModel.setLastPoint(x, y);
         Shape clickedShape = canvasModel.clickShape(x, y);
+        
 
         if(clickedShape != null){
           if(!selectionManager.getSelectedShapes().getChildren().contains(clickedShape)){
@@ -31,12 +33,26 @@ public class MultiSelectedState extends ToolState {
 
     @Override
     public void mouseReleased(double x, double y) {
-        
+      canvasModel.setLastPoint(x, y);
     }
 
     @Override
-    public void mouseDragged(double x, double y, double dx, double dy) {
-      canvasModel.moveSelectedShapes(dx, dy);
+    public void mouseDragged(double x, double y) {
+      canvasModel.moveSelectedShapes(x - canvasModel.getLastX(), y - canvasModel.getLastY());
+      // canvasModel.setLastPoint(x, y);
+    }
+
+    @Override
+    public void mouseClicked(double x, double y){
+      canvasModel.setLastPoint(x, y);
+      selectionManager.clearSelectedShapes();
+      Shape clickedShape = canvasModel.clickShape(x, y);
+      if(clickedShape != null){
+        selectionManager.selectShape(clickedShape);
+        canvasController.setCurrentTool(Tool.SINGLE_SELECTED);
+      } else{
+        canvasController.setCurrentTool(Tool.SELECT);
+      }
     }
   
 }

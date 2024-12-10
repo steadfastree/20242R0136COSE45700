@@ -7,7 +7,6 @@ import miridih.controller.CanvasController;
 
 public class CanvasEventHandler {
   private final CanvasController canvasController;
-  private double lastX, lastY;
   
   public CanvasEventHandler(CanvasController canvasController) {
     this.canvasController = canvasController;
@@ -29,11 +28,12 @@ public class CanvasEventHandler {
       public void mouseDragged(MouseEvent e) {
         canvasController.mouseDragged(
                         e.getX(),
-                        e.getY(),
-                        e.getX() - lastX,
-                        e.getY() - lastY);
-                lastX = e.getX();
-                lastY = e.getY();
+                        e.getY());
+      }
+
+      @Override
+      public void mouseClicked(MouseEvent e){
+        canvasController.mouseClicked(e.getX(), e.getY());
       }
     };
   }

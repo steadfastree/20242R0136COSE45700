@@ -14,15 +14,18 @@ public class SingleSelectedState extends ToolState {
 
     @Override
     public void mousePressed(double x, double y) {
+        canvasModel.setLastPoint(x, y);
         Shape clickedShape = canvasModel.clickShape(x, y);
         
-        canvasModel.setStart(x, y);
+        
         if (clickedShape != null) {
           selectionManager.clearSelectedShapes();
           selectionManager.selectShape(clickedShape); // 선택된 도형 추가
             // 이후 SingleSelectedState로 이동
         } else {
             selectionManager.clearSelectedShapes(); 
+            
+            canvasController.setCurrentTool(Tool.SELECT);
             // 클릭한 곳이 비어있으면 선택 해제 후 selectToolState로 이동
             // startX, startY를 기록
 
@@ -32,13 +35,19 @@ public class SingleSelectedState extends ToolState {
 
     @Override
     public void mouseReleased(double x, double y) {
+      canvasModel.setLastPoint(x, y);
         // System.out.println("SingleSelectedState mouseReleased");
     }
 
     @Override
-    public void mouseDragged(double x, double y, double dx, double dy) {
-      canvasModel.moveSelectedShapes(dx, dy);
-        // System.out.println("SingleSelectedState mouseDragged");
+    public void mouseDragged(double x, double y) {
+      canvasModel.moveSelectedShapes(x - canvasModel.getLastX(), y - canvasModel.getLastY());
+      // canvasModel.setLastPoint(x, y);
+    }
+
+    @Override
+    public void mouseClicked(double x, double y){
+
     }
   
 }

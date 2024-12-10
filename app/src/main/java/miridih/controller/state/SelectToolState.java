@@ -14,9 +14,10 @@ public class SelectToolState extends ToolState {
 
     @Override
     public void mousePressed(double x, double y) {
+        canvasModel.setLastPoint(x, y);
         Shape clickedShape = canvasModel.clickShape(x, y);
         
-        canvasModel.setStart(x, y);
+        
         if (clickedShape != null) {
             selectionManager.selectShape(clickedShape); // 선택된 도형 추가
             canvasController.setCurrentTool(Tool.SINGLE_SELECTED);
@@ -33,6 +34,7 @@ public class SelectToolState extends ToolState {
 
     @Override
     public void mouseReleased(double x, double y) {
+        canvasModel.setLastPoint(x, y);
         // 이 과정에서 selectedShapes의 길이가 0이 아니라면 multiSelectedState로 이동
         if(selectionManager.getSelectedShapesSize() > 1) {
             canvasController.setCurrentTool(Tool.MULTI_SELECTED);
@@ -44,12 +46,12 @@ public class SelectToolState extends ToolState {
     }
 
     @Override
-    public void mouseDragged(double x, double y, double dx, double dy) {
+    public void mouseDragged(double x, double y) {
         // 드래그 영역의 시작점과 끝점을 계산
-        double startX = Math.min(canvasModel.getStartX(), x);
-        double startY = Math.min(canvasModel.getStartY(), y);
-        double endX = Math.max(canvasModel.getStartX(), x);
-        double endY = Math.max(canvasModel.getStartY(), y);
+        double startX = Math.min(canvasModel.getLastX(), x);
+        double startY = Math.min(canvasModel.getLastY(), y);
+        double endX = Math.max(canvasModel.getLastX(), x);
+        double endY = Math.max(canvasModel.getLastY(), y);
 
         // 드래그 영역 내의 도형 선택
         for (Shape shape : canvasModel.getShapes()) {
@@ -59,6 +61,10 @@ public class SelectToolState extends ToolState {
                 selectionManager.selectShape(shape);
             }
         }
+    }
+    @Override
+    public void mouseClicked(double x, double y){
+      
     }
 
 }

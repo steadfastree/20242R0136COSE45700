@@ -19,6 +19,7 @@ public class CanvasModel {
 
     // 그리고 있는 도형의 좌표
     private double startX, startY, endX, endY;
+    private double lastX, lastY;
 
     public ArrayList<Shape> getShapes() {
         return shapes;
@@ -47,23 +48,18 @@ public class CanvasModel {
         toolChangeListeners.add(listener);
     }
 
-    // private void notifyToolChanged() {
-    //     for (ToolChangeListener listener : toolChangeListeners) {
-    //         listener.onToolChanged(currentTool);
-    //     }
-    // }
+    public void setLastPoint(double x, double y){
+        lastX = x;
+        lastY = y;
+    }
 
-    // public void setCurrentTool(Tool tool) {
-    //     if (currentTool != tool) {
-    //         // selectedShapes.clear(); tool 관리는 controller에서 담당
-    //     }
-    //     currentTool = tool;
-    //     notifyToolChanged();
-    // }
+    public double getLastX() {
+        return lastX;
+    }
 
-    // public Tool getCurrentTool() {
-    //     return currentTool;
-    // }
+    public double getLastY() {
+        return lastY;
+    }
 
     public void setStart(double x, double y) {
         startX = x;

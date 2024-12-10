@@ -48,8 +48,12 @@ public class CanvasController {
         currentToolState.mouseReleased(x, y);
     }
 
-    public void mouseDragged(double x, double y, double dx, double dy) {
-        currentToolState.mouseDragged(x, y, dx, dy);
+    public void mouseDragged(double x, double y) {
+        currentToolState.mouseDragged(x, y);
+    }
+
+    public void mouseClicked(double x, double y) {
+        currentToolState.mouseClicked(x, y);
     }
 
     // 키보드 이벤트 처리

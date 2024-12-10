@@ -14,25 +14,31 @@ public class EllipseToolState extends ToolState {
 
     @Override
     public void mousePressed(double x, double y) {
-        canvasModel.setStart(x,y);
+        canvasModel.setLastPoint(x, y);
     }
 
     @Override
     public void mouseReleased(double x, double y) {
-        canvasModel.setEnd(x,y);
+        canvasModel.setLastPoint(x, y);
+        
 
         Shape ellipseShape = EllipseFactory.getInstance().createShape();
-        ellipseShape.setStart(Math.min(canvasModel.getStartX(), canvasModel.getEndX()),
-                              Math.min(canvasModel.getStartY(), canvasModel.getEndY()));
-        ellipseShape.setEnd(Math.max(canvasModel.getStartX(), canvasModel.getEndX()),
-                            Math.max(canvasModel.getStartY(), canvasModel.getEndY()));
+        ellipseShape.setStart(Math.min(canvasModel.getLastX(), x),
+                              Math.min(canvasModel.getLastY(), y));
+        ellipseShape.setEnd(Math.max(canvasModel.getLastX(), x),
+                            Math.max(canvasModel.getLastY(), y));
         
         // Model은 단순히 도형을 저장하고 관리하는 역할만 수행
         canvasModel.addShape(ellipseShape);
     }
 
     @Override
-    public void mouseDragged(double x, double y, double dx, double dy) {
+    public void mouseDragged(double x, double y) {
         // System.out.println("EllipseToolState mouseDragged");
+    }
+
+    @Override
+    public void mouseClicked(double x, double y){
+      
     }
 }
