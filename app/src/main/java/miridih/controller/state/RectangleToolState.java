@@ -1,11 +1,9 @@
 package miridih.controller.state;
 
-import miridih.commands.CommandInvoker;
-import miridih.commands.RectangleDrawCommand;
+import miridih.command.CommandInvoker;
+import miridih.command.RectangleDrawCommand;
 import miridih.controller.CanvasController;
 import miridih.model.CanvasModel;
-import miridih.model.objects.Shape;
-import miridih.model.objects.factory.RectangleFactory;
 
 public class RectangleToolState extends ToolState {
     public RectangleToolState(CanvasController canvasController, CanvasModel canvasModel) {

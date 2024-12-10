@@ -1,4 +1,4 @@
-package miridih.commands;
+package miridih.command;
 
 import miridih.model.CanvasModel;
 import miridih.model.objects.factory.EllipseFactory;

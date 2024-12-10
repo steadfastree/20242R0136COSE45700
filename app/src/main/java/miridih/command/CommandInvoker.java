@@ -1,4 +1,4 @@
-package miridih.commands;
+package miridih.command;
 
 import java.util.Stack;
 

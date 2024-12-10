@@ -1,4 +1,4 @@
-package miridih.commands;
+package miridih.command;
 
 public interface Command {
     default void undo() {

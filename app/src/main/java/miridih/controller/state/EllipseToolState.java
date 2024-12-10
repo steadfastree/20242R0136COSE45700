@@ -1,11 +1,9 @@
 package miridih.controller.state;
 
-import miridih.commands.CommandInvoker;
-import miridih.commands.EllipseDrawCommand;
+import miridih.command.CommandInvoker;
+import miridih.command.EllipseDrawCommand;
 import miridih.controller.CanvasController;
 import miridih.model.CanvasModel;
-import miridih.model.objects.factory.EllipseFactory;
-import miridih.model.objects.Shape;
 
 public class EllipseToolState extends ToolState {
     public EllipseToolState(CanvasController canvasController, CanvasModel canvasModel) {
