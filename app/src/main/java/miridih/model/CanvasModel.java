@@ -18,7 +18,6 @@ public class CanvasModel {
     private ArrayList<ToolChangeListener> toolChangeListeners = new ArrayList<>();
 
     // 그리고 있는 도형의 좌표
-    private double startX, startY, endX, endY;
     private double lastX, lastY;
 
     public ArrayList<Shape> getShapes() {
@@ -61,43 +60,8 @@ public class CanvasModel {
         return lastY;
     }
 
-    public void setStart(double x, double y) {
-        startX = x;
-        startY = y;
-    }
 
-    public void setEnd(double x, double y) {
-        endX = x;
-        endY = y;
-    }
 
-    // Select는 View의 상태를 바꾸는 것이므로, Select State에서 별개로 Selectionmanager를 이용해 처리.
-
-    // public void handleClick(double x, double y) { //마우스 이벤트 처리가 state에서 이루어지도록.
-    //     Shape clickedShape = clickShape(x, y);
-    //     if (currentTool == Tool.SELECT) {
-    //         // 빈 공간을 클릭한 경우
-    //         if (clickedShape == null) {
-    //             selectedShapes.clear();
-    //         }
-    //         // 새로운 도형을 클릭한 경우
-    //         else if (!selectedShapes.contains(clickedShape)) {
-    //             selectedShapes.clear();
-    //             selectedShapes.add(clickedShape);
-    //         }
-    //         // 현재 선택된 도형을 다시 클릭한 경우는 아무 동작 하지 않음
-    //     } else if (currentTool == Tool.MULTI_SELECT) {
-    //         if (clickedShape != null) {
-    //             if (selectedShapes.contains(clickedShape)) {
-    //                 selectedShapes.remove(clickedShape);
-    //             } else {
-    //                 selectedShapes.add(clickedShape);
-    //             }
-    //         }
-    //     } else {
-    //     }
-    //     notifyShapeChanged();
-    // }
 
     public Shape clickShape(double x, double y) {
         for (int i = shapes.size() - 1; i >= 0; i--) {
@@ -109,21 +73,6 @@ public class CanvasModel {
         return null;
     }
 
-    public double getStartX() {
-        return startX;
-    }
-
-    public double getStartY() {
-        return startY;
-    }
-
-    public double getEndX() {
-        return endX;
-    }
-
-    public double getEndY() {
-        return endY;
-    }
 
     public Shape getSelectedShape() {
         return selectionManager.getSelectedShapes().getChildren().isEmpty() ? null : selectionManager.getSelectedShapes().getChildren().get(0);
