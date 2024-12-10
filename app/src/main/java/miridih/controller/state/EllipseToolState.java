@@ -33,16 +33,6 @@ public class EllipseToolState extends ToolState {
 
     @Override
     public void mouseDragged(double x, double y, double dx, double dy) {
-        System.out.println("EllipseToolState mouseDragged");
-    }
-
-    @Override
-    public void keyPressed(int keyCode) {
-        System.out.println("EllipseToolState keyPressed");
-    }
-
-    @Override
-    public void keyReleased(int keyCode) {
-        System.out.println("EllipseToolState keyReleased");
+        // System.out.println("EllipseToolState mouseDragged");
     }
 }

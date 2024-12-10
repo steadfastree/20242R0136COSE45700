@@ -1,5 +1,7 @@
 package miridih.model.objects;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 public abstract class Shape {
@@ -40,6 +42,19 @@ public abstract class Shape {
         startY += dy;
         endX += dx;
         endY += dy;
+    }
+
+    public void drawSelectionBox(Graphics2D g2d) {
+        g2d.setStroke(new BasicStroke(1));
+        g2d.setColor(Color.BLUE);
+        g2d.drawRect((int) this.getStartX(), (int) this.getStartY(),
+                (int) (this.getEndX() - this.getStartX()),
+                (int) (this.getEndY() - this.getStartY()));
+    }
+
+    public void drawHandle(Graphics2D g2d) {
+        g2d.setColor(Color.BLUE);
+        g2d.fillRect((int) this.getEndX() - 3, (int) this.getEndY() - 3, 6, 6);
     }
 
     public boolean isOnHandle(double x, double y) { // 해당 포인트가 끝점 주변 5px 이내에 있는지 확인

@@ -6,11 +6,10 @@ import miridih.model.CanvasModel;
 import miridih.model.objects.Shape;
 
 public class SelectToolState extends ToolState {
-    private final SelectionManager selectionManager;
+    private final SelectionManager selectionManager = SelectionManager.getInstance();
 
     public SelectToolState(CanvasController canvasController, CanvasModel canvasModel) {
         super(canvasController, canvasModel);
-        this.selectionManager = SelectionManager.getInstance(); // 싱글톤
     }
 
     @Override
@@ -60,17 +59,5 @@ public class SelectToolState extends ToolState {
         // selectionManager.getSelectedShapes().move(dx, dy);
     }
 
-    @Override
-    public void keyPressed(int keyCode) {
-        // if (keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_META) {
-        //     canvasController.setCurrentTool(Tool.MULTI_SELECT);
-        //     System.out.println("set to multi select");
-        // }
-    }
-
-    @Override
-    public void keyReleased(int keyCode) {
-        
-    }
 }
 
