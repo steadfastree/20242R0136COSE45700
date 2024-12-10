@@ -60,17 +60,5 @@ public class SelectToolState extends ToolState {
         // selectionManager.getSelectedShapes().move(dx, dy);
     }
 
-    @Override
-    public void keyPressed(int keyCode) {
-        // if (keyCode == KeyEvent.VK_CONTROL || keyCode == KeyEvent.VK_META) {
-        //     canvasController.setCurrentTool(Tool.MULTI_SELECT);
-        //     System.out.println("set to multi select");
-        // }
-    }
-
-    @Override
-    public void keyReleased(int keyCode) {
-        
-    }
 }
 
