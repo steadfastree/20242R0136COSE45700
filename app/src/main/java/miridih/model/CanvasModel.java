@@ -1,18 +1,22 @@
 package miridih.model;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import miridih.common.manager.SelectionManager;
-import miridih.controller.state.Tool;
-import miridih.model.objects.CompositeShape;
 import miridih.model.objects.Shape;
 import miridih.observer.ShapeChangeListener;
 import miridih.observer.ToolChangeListener;
 
 public class CanvasModel {
     private ArrayList<Shape> shapes = new ArrayList<Shape>();
-    private final SelectionManager selectionManager = SelectionManager.getInstance();
+    private SelectionManager selectionManager = SelectionManager.getInstance();
 
     private List<ShapeChangeListener> shapeChangeListeners = new ArrayList<>();
     private ArrayList<ToolChangeListener> toolChangeListeners = new ArrayList<>();
@@ -26,7 +30,7 @@ public class CanvasModel {
 
     public void addShape(Shape shape) {
         shapes.add(shape);
-        notifyShapeChanged(); 
+        notifyShapeChanged();
     }
 
     public void addShapeChangeListener(ShapeChangeListener listener) {
@@ -47,7 +51,7 @@ public class CanvasModel {
         toolChangeListeners.add(listener);
     }
 
-    public void setLastPoint(double x, double y){
+    public void setLastPoint(double x, double y) {
         lastX = x;
         lastY = y;
     }
@@ -60,9 +64,6 @@ public class CanvasModel {
         return lastY;
     }
 
-
-
-
     public Shape clickShape(double x, double y) {
         for (int i = shapes.size() - 1; i >= 0; i--) {
             Shape shape = shapes.get(i);
@@ -73,9 +74,9 @@ public class CanvasModel {
         return null;
     }
 
-
     public Shape getSelectedShape() {
-        return selectionManager.getSelectedShapes().getChildren().isEmpty() ? null : selectionManager.getSelectedShapes().getChildren().get(0);
+        return selectionManager.getSelectedShapes().getChildren().isEmpty() ? null
+                : selectionManager.getSelectedShapes().getChildren().get(0);
     }
 
     public ArrayList<Shape> getSelectedShapes() {
@@ -111,5 +112,34 @@ public class CanvasModel {
         shapes.remove(shape);
         shapes.add(0, shape);
         notifyShapeChanged();
+    }
+
+    public String backup() {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(this.shapes);
+            // oos.writeObject(this.selectionManager);
+            oos.close();
+            return Base64.getEncoder().encodeToString(baos.toByteArray());
+        } catch (IOException e) {
+            return "";
+        }
+    }
+
+    public void restore(String state) {
+        try {
+            byte[] data = Base64.getDecoder().decode(state);
+            ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data));
+            this.shapes = (ArrayList<Shape>) ois.readObject();
+            // this.selectionManager = (SelectionManager) ois.readObject();
+            ois.close();
+            notifyShapeChanged();
+        } catch (ClassNotFoundException e) {
+            System.out.print("ClassNotFoundException occurred.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.print("IOException occurred.");
+        }
     }
 }

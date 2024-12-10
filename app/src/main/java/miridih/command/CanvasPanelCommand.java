@@ -23,4 +23,14 @@ public class CanvasPanelCommand implements CanvasPanelCommandInterface {
         Shape selectedShape = controller.getSelectedShape();
         controller.sendToBack(selectedShape);
     }
+
+    @Override
+    public void undo() {
+        controller.undo();
+    }
+
+    @Override
+    public void redo() {
+        controller.redo();
+    }
 }

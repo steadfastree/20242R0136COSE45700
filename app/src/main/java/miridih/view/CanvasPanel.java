@@ -42,6 +42,8 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
         heightField = createInputField("Height:", 0);
         JButton bringToFrontBtn = new JButton("Bring to Front");
         JButton sendToBackBtn = new JButton("Send to Back");
+        JButton undoBtn = new JButton("Undo");
+        JButton redoBtn = new JButton("Redo");
 
         xField.addActionListener(e -> updateShapeFromPanel());
         yField.addActionListener(e -> updateShapeFromPanel());
@@ -49,6 +51,8 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
         heightField.addActionListener(e -> updateShapeFromPanel());
         bringToFrontBtn.addActionListener(e -> command.bringToFront());
         sendToBackBtn.addActionListener(e -> command.sendToBack());
+        undoBtn.addActionListener(e -> command.undo());
+        redoBtn.addActionListener(e -> command.redo());
 
         canvasPanel.add(xField.getParent());
         canvasPanel.add(yField.getParent());
@@ -56,6 +60,8 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
         canvasPanel.add(heightField.getParent());
         canvasPanel.add(bringToFrontBtn);
         canvasPanel.add(sendToBackBtn);
+        canvasPanel.add(undoBtn);
+        canvasPanel.add(redoBtn);
 
         this.add(canvasPanel);
     }
@@ -108,7 +114,7 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
     }
 
     @Override
-    public void onSelectionChanged(){
+    public void onSelectionChanged() {
         if (selectionManager.getSelectedShapes().getChildren().size() == 1) {
             Shape selectedShape = selectionManager.getSelectedShapes().getChildren().get(0);
             xField.setText(String.valueOf(selectedShape.getStartX()));

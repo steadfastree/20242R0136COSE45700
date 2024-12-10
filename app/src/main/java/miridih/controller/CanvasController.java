@@ -2,6 +2,7 @@ package miridih.controller;
 
 import java.util.ArrayList;
 
+import miridih.commands.CommandInvoker;
 import miridih.common.manager.SelectionManager;
 import miridih.controller.state.EllipseToolState;
 import miridih.controller.state.MultiSelectedState;
@@ -59,12 +60,12 @@ public class CanvasController {
     // 키보드 이벤트 처리
 
     // public void keyPressed(int keyCode) {
-    //     currentToolState.keyPressed(keyCode);
-    //   }
-  
-    //   public void keyReleased(int keyCode) {
-    //     currentToolState.keyReleased(keyCode);
-    //   }
+    // currentToolState.keyPressed(keyCode);
+    // }
+
+    // public void keyReleased(int keyCode) {
+    // currentToolState.keyReleased(keyCode);
+    // }
 
     // 상태 변경
 
@@ -107,7 +108,6 @@ public class CanvasController {
         canvasModel.resizeSelectedShape(x, y);
     }
 
-
     // 도형 이동
     public void moveSelectedShapes(double dx, double dy) {
         canvasModel.moveSelectedShapes(dx, dy);
@@ -130,5 +130,12 @@ public class CanvasController {
         canvasModel.sendToBack(shape);
     }
 
-    
+    // undo / redo
+    public void undo() {
+        CommandInvoker.getInstance().undo(canvasModel);
+    }
+
+    public void redo() {
+        CommandInvoker.getInstance().redo(canvasModel);
+    }
 }

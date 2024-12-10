@@ -1,5 +1,7 @@
 package miridih.controller.state;
 
+import miridih.commands.CommandInvoker;
+import miridih.commands.RectangleDrawCommand;
 import miridih.controller.CanvasController;
 import miridih.model.CanvasModel;
 import miridih.model.objects.Shape;
@@ -17,15 +19,18 @@ public class RectangleToolState extends ToolState {
 
     @Override
     public void mouseReleased(double x, double y) {
-        // RectangleToolState에서 직접 Rectangle 도형을 생성
-        Shape rectangleShape = RectangleFactory.getInstance().createShape();
-        rectangleShape.setStart(Math.min(canvasModel.getLastX(), x),
-                              Math.min(canvasModel.getLastY(), y));
-        rectangleShape.setEnd(Math.max(canvasModel.getLastX(), x),
-                            Math.max(canvasModel.getLastY(), y));
-        
-        // Model은 단순히 도형을 저장하고 관리하는 역할만 수행
-        canvasModel.addShape(rectangleShape);
+        // // RectangleToolState에서 직접 Rectangle 도형을 생성
+        // Shape rectangleShape = RectangleFactory.getInstance().createShape();
+        // rectangleShape.setStart(Math.min(canvasModel.getLastX(), x),
+        // Math.min(canvasModel.getLastY(), y));
+        // rectangleShape.setEnd(Math.max(canvasModel.getLastX(), x),
+        // Math.max(canvasModel.getLastY(), y));
+
+        // // Model은 단순히 도형을 저장하고 관리하는 역할만 수행
+        // canvasModel.addShape(rectangleShape);
+
+        RectangleDrawCommand command = new RectangleDrawCommand(canvasModel, x, y);
+        CommandInvoker.getInstance().executeCommand(command);
     }
 
     @Override
@@ -34,8 +39,8 @@ public class RectangleToolState extends ToolState {
     }
 
     @Override
-    public void mouseClicked(double x, double y){
-      
+    public void mouseClicked(double x, double y) {
+
     }
 
 }
