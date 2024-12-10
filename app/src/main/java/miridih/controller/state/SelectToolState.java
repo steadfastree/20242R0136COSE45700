@@ -6,11 +6,10 @@ import miridih.model.CanvasModel;
 import miridih.model.objects.Shape;
 
 public class SelectToolState extends ToolState {
-    private final SelectionManager selectionManager;
+    private final SelectionManager selectionManager = SelectionManager.getInstance();
 
     public SelectToolState(CanvasController canvasController, CanvasModel canvasModel) {
         super(canvasController, canvasModel);
-        this.selectionManager = SelectionManager.getInstance(); // 싱글톤
     }
 
     @Override
