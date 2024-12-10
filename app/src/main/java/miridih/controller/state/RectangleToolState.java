@@ -20,7 +20,7 @@ public class RectangleToolState extends ToolState {
         canvasModel.setEnd(x, y);
         
         // RectangleToolState에서 직접 Rectangle 도형을 생성
-        Shape rectangleShape = new RectangleFactory().createShape();
+        Shape rectangleShape = RectangleFactory.getInstance().createShape();
         rectangleShape.setStart(Math.min(canvasModel.getStartX(), canvasModel.getEndX()),
                               Math.min(canvasModel.getStartY(), canvasModel.getEndY()));
         rectangleShape.setEnd(Math.max(canvasModel.getStartX(), canvasModel.getEndX()),

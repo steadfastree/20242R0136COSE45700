@@ -8,7 +8,7 @@ public class EllipseFactory implements ShapeFactory {
 
   private EllipseFactory() {}
 
-  public EllipseFactory getInstance() {
+  public static EllipseFactory getInstance() {
     return instance;
   }
 

@@ -21,7 +21,7 @@ public class EllipseToolState extends ToolState {
     public void mouseReleased(double x, double y) {
         canvasModel.setEnd(x,y);
 
-        Shape ellipseShape = new EllipseFactory().createShape();
+        Shape ellipseShape = EllipseFactory.getInstance().createShape();
         ellipseShape.setStart(Math.min(canvasModel.getStartX(), canvasModel.getEndX()),
                               Math.min(canvasModel.getStartY(), canvasModel.getEndY()));
         ellipseShape.setEnd(Math.max(canvasModel.getStartX(), canvasModel.getEndX()),
