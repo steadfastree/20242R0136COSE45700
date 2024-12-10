@@ -1,5 +1,5 @@
 package miridih.controller.state;
 
 public enum Tool {
-    SELECT, MULTI_SELECT, RECTANGLE, ELLIPSE
+    SELECT, SINGLE_SELECTED, MULTI_SELECTED, RECTANGLE, ELLIPSE,
 }

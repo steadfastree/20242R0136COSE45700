@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import miridih.common.manager.SelectionManager;
 import miridih.controller.state.EllipseToolState;
+import miridih.controller.state.MultiSelectedState;
 import miridih.controller.state.RectangleToolState;
 import miridih.controller.state.SelectToolState;
+import miridih.controller.state.SingleSelectedState;
 import miridih.controller.state.Tool;
 import miridih.controller.state.ToolState;
 import miridih.model.CanvasModel;
@@ -73,6 +75,12 @@ public class CanvasController {
                 break;
             case SELECT:
                 currentToolState = new SelectToolState(this, canvasModel);
+                break;
+            case SINGLE_SELECTED:
+                currentToolState = new SingleSelectedState(this, canvasModel);
+                break;
+            case MULTI_SELECTED:
+                currentToolState = new MultiSelectedState(this, canvasModel);
                 break;
         }
     }

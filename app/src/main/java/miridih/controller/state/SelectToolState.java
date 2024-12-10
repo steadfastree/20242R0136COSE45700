@@ -16,47 +16,49 @@ public class SelectToolState extends ToolState {
     public void mousePressed(double x, double y) {
         Shape clickedShape = canvasModel.clickShape(x, y);
         
+        canvasModel.setStart(x, y);
         if (clickedShape != null) {
             selectionManager.selectShape(clickedShape); // 선택된 도형 추가
+            canvasController.setCurrentTool(Tool.SINGLE_SELECTED);
+            // 이후 SingleSelectedState로 이동
         } else {
             selectionManager.clearSelectedShapes(); // 클릭한 곳이 비어있으면 선택 해제
+            // startX, startY를 기록
+
         }
 
-        // press 했을때 도형이면 선택에 추가, 아니면 선택 해제
-        // 릴리즈일 때 
-        
-        // if (selectedShape != null && selectedShape.isOnHandle(x, y)) {
-        //     canvasController.isResizing = true;
-        // } else {
-        //     canvasController.isDragging = true;
-        // } 일단 배제
 
-        canvasModel.setStart(x, y);
+        
     }
 
     @Override
     public void mouseReleased(double x, double y) {
-        double dx = x - canvasModel.getStartX();
-        double dy = y - canvasModel.getStartY();
+        // 이 과정에서 selectedShapes의 길이가 0이 아니라면 multiSelectedState로 이동
+        if(selectionManager.getSelectedShapesSize() > 1) {
+            canvasController.setCurrentTool(Tool.MULTI_SELECTED);
+        }
+        else if(selectionManager.getSelectedShapesSize() == 1) {
+            canvasController.setCurrentTool(Tool.SINGLE_SELECTED);
+        }
 
-        canvasModel.moveSelectedShapes(dx, dy);
-        canvasModel.setEnd(x,y);
-
-        // Shape clickedShape = canvasModel.clickShape(x, y);
-        // ArrayList<Shape> selectedShapes = canvasModel.getSelectedShapes();
-        // if (clickedShape != null) {
-        //         if (selectedShapes.contains(clickedShape)) {
-        //             selectedShapes.remove(clickedShape);
-        //         } else {
-        //             selectedShapes.add(clickedShape);
-        //         }
-        //     }
     }
 
     @Override
     public void mouseDragged(double x, double y, double dx, double dy) {
-        // System.out.println("SelectToolState mouseDragged");
-        // selectionManager.getSelectedShapes().move(dx, dy);
+        // 드래그 영역의 시작점과 끝점을 계산
+        double startX = Math.min(canvasModel.getStartX(), x);
+        double startY = Math.min(canvasModel.getStartY(), y);
+        double endX = Math.max(canvasModel.getStartX(), x);
+        double endY = Math.max(canvasModel.getStartY(), y);
+
+        // 드래그 영역 내의 도형 선택
+        for (Shape shape : canvasModel.getShapes()) {
+            // 도형의 각 점을 확인하여 드래그 영역에 포함되는지 체크
+            if (shape.contains(startX, startY) || shape.contains(endX, endY) ||
+                shape.contains(startX, endY) || shape.contains(endX, startY)) {
+                selectionManager.selectShape(shape);
+            }
+        }
     }
 
 }

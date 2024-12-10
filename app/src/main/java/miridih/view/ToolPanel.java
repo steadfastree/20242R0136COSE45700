@@ -15,7 +15,6 @@ public class ToolPanel extends JPanel implements ToolChangeListener {
     private JButton rectangleButton;
     private JButton ellipseButton;
     private JButton selectButton;
-    private JButton multiSelectButton;
 
     private CanvasController controller;
 
@@ -29,11 +28,9 @@ public class ToolPanel extends JPanel implements ToolChangeListener {
         rectangleButton = createToolButton("Rectangle", Tool.RECTANGLE);
         ellipseButton = createToolButton("Ellipse", Tool.ELLIPSE);
         selectButton = createToolButton("Select", Tool.SELECT);
-        multiSelectButton = createToolButton("Multi Select", Tool.MULTI_SELECT);
 
         // Add buttons to the panel
         toolPanel.add(selectButton);
-        // toolPanel.add(multiSelectButton);
         toolPanel.add(rectangleButton);
         toolPanel.add(ellipseButton);
         this.add(toolPanel);
@@ -57,7 +54,6 @@ public class ToolPanel extends JPanel implements ToolChangeListener {
         rectangleButton.setBackground(null);
         ellipseButton.setBackground(null);
         selectButton.setBackground(null);
-        multiSelectButton.setBackground(null);
 
         // Set the selected button's color to yellow
         selectedButton.setBackground(Color.YELLOW);
@@ -68,6 +64,5 @@ public class ToolPanel extends JPanel implements ToolChangeListener {
         rectangleButton.setBackground(newTool == Tool.RECTANGLE ? Color.YELLOW : null);
         ellipseButton.setBackground(newTool == Tool.ELLIPSE ? Color.YELLOW : null);
         selectButton.setBackground(newTool == Tool.SELECT ? Color.YELLOW : null);
-        multiSelectButton.setBackground(newTool == Tool.MULTI_SELECT ? Color.YELLOW : null);
     }
 }

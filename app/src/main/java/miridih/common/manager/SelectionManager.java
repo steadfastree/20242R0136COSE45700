@@ -34,12 +34,11 @@ public class SelectionManager {
     notifySelectionChanged();
   }
 
-  public void addSelectedShape(Shape shape) {
-    selectedShapes.addShape(shape);
-    notifySelectionChanged();
+  public int getSelectedShapesSize() {
+    return selectedShapes.getChildren().size();
   }
 
-  public void removeSelectedShape(Shape shape) {
+  public void removeShape(Shape shape) {
     selectedShapes.removeShape(shape);
     notifySelectionChanged();
   }

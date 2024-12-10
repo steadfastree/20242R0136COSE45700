@@ -15,9 +15,7 @@ public class CompositeShape extends Shape {
   }
 
   public void selectShape(Shape shape) {
-    if(children.contains(shape)) {
-      children.remove(shape);
-    } else {
+    if(!children.contains(shape)) {
       children.add(shape);
     }
   }
