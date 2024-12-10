@@ -39,7 +39,7 @@ public class MultiSelectedState extends ToolState {
     @Override
     public void mouseDragged(double x, double y) {
       canvasModel.moveSelectedShapes(x - canvasModel.getLastX(), y - canvasModel.getLastY());
-      // canvasModel.setLastPoint(x, y);
+      canvasModel.setLastPoint(x, y);
     }
 
     @Override

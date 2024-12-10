@@ -1,18 +1,21 @@
 package miridih.view;
 
-import miridih.command.CanvasPanelCommand;
-import miridih.controller.CanvasController;
-import miridih.model.objects.Shape;
-import miridih.observer.ShapeChangeListener;
-
 import java.awt.FlowLayout;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class CanvasPanel extends JPanel implements ShapeChangeListener {
+import miridih.command.CanvasPanelCommand;
+import miridih.common.manager.SelectionManager;
+import miridih.controller.CanvasController;
+import miridih.model.objects.Shape;
+import miridih.observer.SelectionChangeListener;
+import miridih.observer.ShapeChangeListener;
+
+public class CanvasPanel extends JPanel implements ShapeChangeListener, SelectionChangeListener {
     private JTextField xField;
     private JTextField yField;
     private JTextField widthField;
@@ -21,12 +24,14 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener {
     private CanvasPanelCommand command;
     private CanvasController controller;
     private Canvas canvas;
+    private final SelectionManager selectionManager = SelectionManager.getInstance();
 
     public CanvasPanel(CanvasController controller, Canvas canvas) {
         this.command = new CanvasPanelCommand(controller);
         this.controller = controller;
         this.canvas = canvas;
         controller.addShapeChangeListener(this);
+        controller.addSelectionChangeListener(this);
 
         JPanel canvasPanel = new JPanel();
         canvasPanel.setLayout(new BoxLayout(canvasPanel, BoxLayout.Y_AXIS));
@@ -70,7 +75,7 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener {
     }
 
     public void updateShapeFromPanel() {
-        Shape selectedShape = controller.getSelectedShape();
+        Shape selectedShape = selectionManager.getSelectedShapes().getChildren().get(0);
         if (selectedShape != null) {
             try {
                 double x = Double.parseDouble(xField.getText());
@@ -88,11 +93,28 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener {
 
     @Override
     public void onShapeChanged() {
-        if (controller.getSelectedShape() != null) {
-            xField.setText(String.valueOf(controller.getSelectedShape().getStartX()));
-            yField.setText(String.valueOf(controller.getSelectedShape().getStartY()));
-            widthField.setText(String.valueOf(controller.getSelectedShape().getWidth()));
-            heightField.setText(String.valueOf(controller.getSelectedShape().getHeight()));
+        if (selectionManager.getSelectedShapes().getChildren().size() == 1) {
+            Shape selectedShape = selectionManager.getSelectedShapes().getChildren().get(0);
+            xField.setText(String.valueOf(selectedShape.getStartX()));
+            yField.setText(String.valueOf(selectedShape.getStartY()));
+            widthField.setText(String.valueOf(selectedShape.getWidth()));
+            heightField.setText(String.valueOf(selectedShape.getHeight()));
+        } else {
+            xField.setText("");
+            yField.setText("");
+            widthField.setText("");
+            heightField.setText("");
+        }
+    }
+
+    @Override
+    public void onSelectionChanged(){
+        if (selectionManager.getSelectedShapes().getChildren().size() == 1) {
+            Shape selectedShape = selectionManager.getSelectedShapes().getChildren().get(0);
+            xField.setText(String.valueOf(selectedShape.getStartX()));
+            yField.setText(String.valueOf(selectedShape.getStartY()));
+            widthField.setText(String.valueOf(selectedShape.getWidth()));
+            heightField.setText(String.valueOf(selectedShape.getHeight()));
         } else {
             xField.setText("");
             yField.setText("");
