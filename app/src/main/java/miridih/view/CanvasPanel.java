@@ -22,14 +22,10 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
     private JTextField heightField;
 
     private CanvasPanelCommand command;
-    private CanvasController controller;
-    private Canvas canvas;
     private final SelectionManager selectionManager = SelectionManager.getInstance();
 
-    public CanvasPanel(CanvasController controller, Canvas canvas) {
+    public CanvasPanel(CanvasController controller) {
         this.command = new CanvasPanelCommand(controller);
-        this.controller = controller;
-        this.canvas = canvas;
         controller.addShapeChangeListener(this);
         controller.addSelectionChangeListener(this);
 
@@ -45,10 +41,14 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
         JButton undoBtn = new JButton("Undo");
         JButton redoBtn = new JButton("Redo");
 
-        xField.addActionListener(e -> updateShapeFromPanel());
-        yField.addActionListener(e -> updateShapeFromPanel());
-        widthField.addActionListener(e -> updateShapeFromPanel());
-        heightField.addActionListener(e -> updateShapeFromPanel());
+        xField.addActionListener(e -> command.updateShapeFromPanel(xField.getText(), yField.getText(),
+                widthField.getText(), heightField.getText()));
+        yField.addActionListener(e -> command.updateShapeFromPanel(xField.getText(), yField.getText(),
+                widthField.getText(), heightField.getText()));
+        widthField.addActionListener(e -> command.updateShapeFromPanel(xField.getText(), yField.getText(),
+                widthField.getText(), heightField.getText()));
+        heightField.addActionListener(e -> command.updateShapeFromPanel(xField.getText(), yField.getText(),
+                widthField.getText(), heightField.getText()));
         bringToFrontBtn.addActionListener(e -> command.bringToFront());
         sendToBackBtn.addActionListener(e -> command.sendToBack());
         undoBtn.addActionListener(e -> command.undo());
@@ -78,23 +78,6 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
 
         this.add(panel);
         return textField;
-    }
-
-    public void updateShapeFromPanel() {
-        Shape selectedShape = selectionManager.getSelectedShapes().getChildren().get(0);
-        if (selectedShape != null) {
-            try {
-                double x = Double.parseDouble(xField.getText());
-                double y = Double.parseDouble(yField.getText());
-                double width = Double.parseDouble(widthField.getText());
-                double height = Double.parseDouble(heightField.getText());
-
-                controller.updateSelectedShape(x, y, width, height);
-                canvas.repaint();
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input.");
-            }
-        }
     }
 
     @Override

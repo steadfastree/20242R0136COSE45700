@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import miridih.command.BringToFrontCommand;
 import miridih.command.CommandInvoker;
 import miridih.command.SendToBackCommand;
+import miridih.command.UpdateSelectedShapeCommand;
 import miridih.common.manager.SelectionManager;
 import miridih.controller.state.EllipseToolState;
 import miridih.controller.state.LineToolState;
@@ -121,12 +122,14 @@ public class CanvasController {
         canvasModel.moveSelectedShapes(dx, dy);
     }
 
-    // 도형 업데이트
-    public void updateSelectedShape(double x, double y, double width, double height) {
+    // // 도형 업데이트
+    public void updateSelectedShape(double x, double y, double w, double h) {
         Shape selectedShape = getSelectedShape();
-        if (selectedShape != null) {
-            canvasModel.updateShape(selectedShape, x, y, width, height);
-        }
+        // if (selectedShape != null) {
+        // canvasModel.updateShape(selectedShape, x, y, w, h);
+        // }
+        UpdateSelectedShapeCommand command = new UpdateSelectedShapeCommand(canvasModel, selectedShape, x, y, w, h);
+        CommandInvoker.getInstance().executeCommand(command);
     }
 
     // 도형 순서 변경
