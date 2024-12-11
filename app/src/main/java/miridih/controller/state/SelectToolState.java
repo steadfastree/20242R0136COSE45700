@@ -3,6 +3,7 @@ package miridih.controller.state;
 import miridih.command.CommandInvoker;
 import miridih.command.SelectDraggedOutCommand;
 import miridih.command.SelectDraggingCommand;
+import miridih.command.SelectShapeCommand;
 import miridih.common.manager.PointManager;
 import miridih.common.manager.SelectionManager;
 import miridih.controller.CanvasController;
@@ -19,21 +20,8 @@ public class SelectToolState extends ToolState {
     @Override
     public void mousePressed(double x, double y) {
         PointManager.getInstance().setLastPoint(x, y);
-        Shape clickedShape = canvasModel.clickShape(x, y);
-        
-        
-        if (clickedShape != null) {
-            selectionManager.selectShape(clickedShape); // 선택된 도형 추가
-            canvasController.setCurrentTool(Tool.SINGLE_SELECTED);
-            // 이후 SingleSelectedState로 이동
-        } else {
-            selectionManager.clearSelectedShapes(); // 클릭한 곳이 비어있으면 선택 해제
-            // startX, startY를 기록
-
-        }
-
-
-        
+        SelectShapeCommand command = new SelectShapeCommand(canvasController, canvasModel, x, y);
+        CommandInvoker.getInstance().executeCommand(command);
     }
 
     @Override
@@ -51,7 +39,7 @@ public class SelectToolState extends ToolState {
         SelectDraggingCommand command = new SelectDraggingCommand(canvasController, canvasModel, x, y);
         CommandInvoker.getInstance().executeCommand(command);
     }
-    
+
     @Override
     public void mouseClicked(double x, double y){
       
