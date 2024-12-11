@@ -13,11 +13,13 @@ public class LineToolState extends ToolState {
 
     @Override
     public void mousePressed(double x, double y) {
+        System.out.println(x + " " + y);
         PointManager.getInstance().setLastPoint(x, y);
     }
 
     @Override
     public void mouseReleased(double x, double y) {
+        System.out.println(x + " " + y);
         LineDrawCommand command = new LineDrawCommand(canvasModel, x, y);
         CommandInvoker.getInstance().executeCommand(command);
     }
