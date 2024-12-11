@@ -2,6 +2,7 @@ package miridih.controller.state;
 
 import miridih.command.CommandInvoker;
 import miridih.command.EllipseDrawCommand;
+import miridih.common.manager.PointManager;
 import miridih.controller.CanvasController;
 import miridih.model.CanvasModel;
 
@@ -12,7 +13,7 @@ public class EllipseToolState extends ToolState {
 
     @Override
     public void mousePressed(double x, double y) {
-        canvasModel.setLastPoint(x, y);
+        PointManager.getInstance().setLastPoint(x, y);
     }
 
     @Override
