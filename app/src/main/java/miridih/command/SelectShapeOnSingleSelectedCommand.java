@@ -12,7 +12,13 @@ public class SelectShapeOnSingleSelectedCommand extends SelectCommand {
 
     @Override
     protected void doExecute() {
-      Shape clickedShape = this.canvasModel.clickShape(x, y);
+      boolean isOnHandle = this.selectionManager.getSelectedShapes().getChildren().get(0).isOnHandle(x, y);
+      Shape clickedShape = this.canvasModel.clickShape(x, y); 
+      // model에서 onHandle인지도 체크 가능. 
+      if(isOnHandle){
+        this.canvasController.setCurrentTool(Tool.RESIZE);
+      }
+      else {
         if (clickedShape != null) {
           this.selectionManager.clearSelectedShapes();
           this.selectionManager.selectShape(clickedShape); // 선택된 도형 추가
@@ -23,6 +29,7 @@ public class SelectShapeOnSingleSelectedCommand extends SelectCommand {
             // 클릭한 곳이 비어있으면 선택 해제 후 selectToolState로 이동
             // startX, startY를 기록
         }
+      }
     }
   
 }

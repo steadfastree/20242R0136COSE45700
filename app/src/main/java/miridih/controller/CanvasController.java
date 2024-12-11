@@ -13,6 +13,7 @@ import miridih.controller.state.EllipseToolState;
 import miridih.controller.state.LineToolState;
 import miridih.controller.state.MultiSelectedState;
 import miridih.controller.state.RectangleToolState;
+import miridih.controller.state.ResizeState;
 import miridih.controller.state.SelectToolState;
 import miridih.controller.state.SingleSelectedState;
 import miridih.controller.state.Tool;
@@ -63,6 +64,10 @@ public class CanvasController {
     }
 
     /* 상태 변경 */
+    public void setState(ToolState state) {
+        currentToolState = state;
+    }
+    
     public void setCurrentTool(Tool tool) {
         System.out.println("setCurrentTool: " + tool);
         switch (tool) {
@@ -83,6 +88,9 @@ public class CanvasController {
                 break;
             case MULTI_SELECTED:
                 currentToolState = new MultiSelectedState(this, canvasModel);
+                break;
+            case RESIZE:
+                currentToolState = new ResizeState(this, canvasModel);
                 break;
             default:
                 break;
