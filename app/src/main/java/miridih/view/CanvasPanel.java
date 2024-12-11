@@ -41,7 +41,7 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.setPreferredSize(new Dimension(304, 1080));
 
-        // colorChooser = createColorChooser();
+        colorChooser = createColorChooser();
         xField = createInputField("X:", 0);
         yField = createInputField("Y:", 0);
         widthField = createInputField("W:", 0);
@@ -51,7 +51,7 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
         JButton undoBtn = new JButton("Undo");
         JButton redoBtn = new JButton("Redo");
 
-        // colorChooser.getSelectionModel().addChangeListener(e -> command.updateColor(colorChooser.getColor()));
+        colorChooser.getSelectionModel().addChangeListener(e -> command.updateColor(colorChooser.getColor()));
         ActionListener fieldListener = e -> command.updateShapeFromPanel(
                 xField.getText(), yField.getText(), widthField.getText(), heightField.getText());
         xField.addActionListener(fieldListener);
@@ -63,7 +63,7 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
         undoBtn.addActionListener(e -> command.undo());
         redoBtn.addActionListener(e -> command.redo());
 
-        // this.add(colorChooser);
+        this.add(colorChooser);
         this.add(xField.getParent());
         this.add(yField.getParent());
         this.add(widthField.getParent());
