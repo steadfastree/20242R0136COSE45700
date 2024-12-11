@@ -42,7 +42,6 @@ public class SingleSelectedState extends ToolState {
 
     @Override
     public void mouseDragged(double x, double y) {
-
       canvasModel.moveSelectedShapes(x - PointManager.getInstance().getLastX(), y - PointManager.getInstance().getLastY());
       PointManager.getInstance().setLastPoint(x, y);
     }

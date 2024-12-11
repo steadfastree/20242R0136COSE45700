@@ -1,5 +1,7 @@
 package miridih.controller.state;
 
+import miridih.command.CommandInvoker;
+import miridih.command.SelectShapeOnMultiSelectedCommand;
 import miridih.common.manager.PointManager;
 import miridih.common.manager.SelectionManager;
 import miridih.controller.CanvasController;
@@ -16,20 +18,8 @@ public class MultiSelectedState extends ToolState {
     @Override
     public void mousePressed(double x, double y) {
         PointManager.getInstance().setLastPoint(x, y);
-        Shape clickedShape = canvasModel.clickShape(x, y);
-        
-
-        if(clickedShape != null){
-          if(!selectionManager.getSelectedShapes().getChildren().contains(clickedShape)){
-            selectionManager.clearSelectedShapes();
-            selectionManager.selectShape(clickedShape);
-            canvasController.setCurrentTool(Tool.SINGLE_SELECTED);
-          } 
-        } else{
-            selectionManager.clearSelectedShapes();
-            canvasController.setCurrentTool(Tool.SELECT);
-          
-        }
+        SelectShapeOnMultiSelectedCommand command = new SelectShapeOnMultiSelectedCommand(canvasController, canvasModel, x, y);
+        CommandInvoker.getInstance().executeCommand(command);
     }
 
     @Override
