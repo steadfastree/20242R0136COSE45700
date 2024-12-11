@@ -1,9 +1,9 @@
 package miridih.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -23,8 +23,8 @@ public class ToolPanel extends JPanel implements ToolChangeListener {
         this.controller = controller;
         controller.addToolChangeListener(this);
 
-        JPanel toolPanel = new JPanel();
-        toolPanel.setLayout(new BoxLayout(toolPanel, BoxLayout.Y_AXIS));
+        this.setLayout(new FlowLayout(FlowLayout.CENTER));
+        this.setPreferredSize(new Dimension(128, 1080));
 
         selectButton = createToolButton("Select", Tool.SELECT);
         rectangleButton = createToolButton("Rectangle", Tool.RECTANGLE);
@@ -32,21 +32,23 @@ public class ToolPanel extends JPanel implements ToolChangeListener {
         lineButton = createToolButton("Line", Tool.LINE);
 
         // Add buttons to the panel
-        toolPanel.add(selectButton);
-        toolPanel.add(rectangleButton);
-        toolPanel.add(ellipseButton);
-        toolPanel.add(lineButton);
-        this.add(toolPanel);
+        this.add(selectButton);
+        this.add(rectangleButton);
+        this.add(ellipseButton);
+        this.add(lineButton);
     }
 
     private JButton createToolButton(String label, Tool tool) {
         JButton button = new JButton(label);
+        button.setPreferredSize(new Dimension(108, 32));
+
         button.addActionListener((ActionEvent e) -> {
             controller.setCurrentTool(tool);
             updateButtonColors(button);
         });
-        button.setFocusPainted(false); // Optional: remove focus border
-        button.setOpaque(true); // Ensure the background color is painted
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setOpaque(true);
 
         return button;
     }
