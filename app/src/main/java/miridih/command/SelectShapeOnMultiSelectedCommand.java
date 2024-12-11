@@ -22,7 +22,6 @@ public class SelectShapeOnMultiSelectedCommand extends SelectCommand {
         } else{
             this.selectionManager.clearSelectedShapes();
             this.canvasController.setCurrentTool(Tool.SELECT);
-          
         }
     }
   
