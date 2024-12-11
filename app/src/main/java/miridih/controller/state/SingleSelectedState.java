@@ -1,6 +1,7 @@
 package miridih.controller.state;
 
 import miridih.command.CommandInvoker;
+import miridih.command.MoveSelectedShapesByDraggingCommand;
 import miridih.command.SelectShapeOnSingleSelectedCommand;
 import miridih.common.manager.PointManager;
 import miridih.common.manager.SelectionManager;
@@ -30,7 +31,8 @@ public class SingleSelectedState extends ToolState {
 
     @Override
     public void mouseDragged(double x, double y) {
-      canvasModel.moveSelectedShapes(x - PointManager.getInstance().getLastX(), y - PointManager.getInstance().getLastY());
+      MoveSelectedShapesByDraggingCommand command = new MoveSelectedShapesByDraggingCommand(canvasModel, x, y);
+      CommandInvoker.getInstance().executeCommand(command);
       PointManager.getInstance().setLastPoint(x, y);
     }
 
