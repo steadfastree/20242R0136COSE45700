@@ -15,8 +15,6 @@ public class LineShape extends Shape {
     int y1 = (int) getStartY();
     int y2 = (int) getEndY();
 
-    System.out.println(x1 + " " + y1 + " " + x2 + " " + y2);
-
     g2d.setColor(getColor());
     g2d.drawLine(x1, y1, x2, y2);
   }

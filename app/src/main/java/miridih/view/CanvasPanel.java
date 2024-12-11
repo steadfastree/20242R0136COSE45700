@@ -2,10 +2,10 @@ package miridih.view;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
@@ -36,14 +36,16 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
         controller.addShapeChangeListener(this);
         controller.addSelectionChangeListener(this);
 
-        JPanel canvasPanel = new JPanel();
-        canvasPanel.setLayout(new BoxLayout(canvasPanel, BoxLayout.Y_AXIS));
+        // JPanel canvasPanel = new JPanel();
+        // canvasPanel.setLayout(new BoxLayout(canvasPanel, BoxLayout.Y_AXIS));
+        this.setLayout(new FlowLayout(FlowLayout.CENTER));
+        this.setPreferredSize(new Dimension(304, 1080));
 
         colorChooser = createColorChooser();
         xField = createInputField("X:", 0);
         yField = createInputField("Y:", 0);
-        widthField = createInputField("Width:", 0);
-        heightField = createInputField("Height:", 0);
+        widthField = createInputField("W:", 0);
+        heightField = createInputField("H:", 0);
         JButton bringToFrontBtn = new JButton("Bring to Front");
         JButton sendToBackBtn = new JButton("Send to Back");
         JButton undoBtn = new JButton("Undo");
@@ -61,17 +63,15 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
         undoBtn.addActionListener(e -> command.undo());
         redoBtn.addActionListener(e -> command.redo());
 
-        canvasPanel.add(colorChooser);
-        canvasPanel.add(xField.getParent());
-        canvasPanel.add(yField.getParent());
-        canvasPanel.add(widthField.getParent());
-        canvasPanel.add(heightField.getParent());
-        canvasPanel.add(bringToFrontBtn);
-        canvasPanel.add(sendToBackBtn);
-        canvasPanel.add(undoBtn);
-        canvasPanel.add(redoBtn);
-
-        this.add(canvasPanel);
+        this.add(colorChooser);
+        this.add(xField.getParent());
+        this.add(yField.getParent());
+        this.add(widthField.getParent());
+        this.add(heightField.getParent());
+        this.add(bringToFrontBtn);
+        this.add(sendToBackBtn);
+        this.add(undoBtn);
+        this.add(redoBtn);
     }
 
     private JColorChooser createColorChooser() {
@@ -104,7 +104,7 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
         panel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         JLabel jLabel = new JLabel(label);
-        JTextField textField = new JTextField(String.valueOf(value), 10);
+        JTextField textField = new JTextField(String.valueOf(value), 8);
 
         panel.add(jLabel);
         panel.add(textField);
