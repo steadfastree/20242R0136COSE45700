@@ -2,8 +2,13 @@ package miridih.controller;
 
 import java.util.ArrayList;
 
+import miridih.command.BringToFrontCommand;
+import miridih.command.CommandInvoker;
+import miridih.command.SendToBackCommand;
+import miridih.command.UpdateSelectedShapeCommand;
 import miridih.common.manager.SelectionManager;
 import miridih.controller.state.EllipseToolState;
+import miridih.controller.state.LineToolState;
 import miridih.controller.state.MultiSelectedState;
 import miridih.controller.state.RectangleToolState;
 import miridih.controller.state.SelectToolState;
@@ -59,12 +64,12 @@ public class CanvasController {
     // 키보드 이벤트 처리
 
     // public void keyPressed(int keyCode) {
-    //     currentToolState.keyPressed(keyCode);
-    //   }
-  
-    //   public void keyReleased(int keyCode) {
-    //     currentToolState.keyReleased(keyCode);
-    //   }
+    // currentToolState.keyPressed(keyCode);
+    // }
+
+    // public void keyReleased(int keyCode) {
+    // currentToolState.keyReleased(keyCode);
+    // }
 
     // 상태 변경
 
@@ -77,6 +82,9 @@ public class CanvasController {
             case ELLIPSE:
                 currentToolState = new EllipseToolState(this, canvasModel);
                 break;
+            case LINE:
+                currentToolState = new LineToolState(this, canvasModel);
+                break;
             case SELECT:
                 currentToolState = new SelectToolState(this, canvasModel);
                 break;
@@ -85,6 +93,8 @@ public class CanvasController {
                 break;
             case MULTI_SELECTED:
                 currentToolState = new MultiSelectedState(this, canvasModel);
+                break;
+            default:
                 break;
         }
     }
@@ -107,28 +117,38 @@ public class CanvasController {
         canvasModel.resizeSelectedShape(x, y);
     }
 
-
     // 도형 이동
     public void moveSelectedShapes(double dx, double dy) {
         canvasModel.moveSelectedShapes(dx, dy);
     }
 
-    // 도형 업데이트
-    public void updateSelectedShape(double x, double y, double width, double height) {
+    // // 도형 업데이트
+    public void updateSelectedShape(double x, double y, double w, double h) {
         Shape selectedShape = getSelectedShape();
-        if (selectedShape != null) {
-            canvasModel.updateShape(selectedShape, x, y, width, height);
-        }
+        // if (selectedShape != null) {
+        // canvasModel.updateShape(selectedShape, x, y, w, h);
+        // }
+        UpdateSelectedShapeCommand command = new UpdateSelectedShapeCommand(canvasModel, selectedShape, x, y, w, h);
+        CommandInvoker.getInstance().executeCommand(command);
     }
 
     // 도형 순서 변경
     public void bringToFront(Shape shape) {
-        canvasModel.bringToFront(shape);
+        BringToFrontCommand command = new BringToFrontCommand(canvasModel, shape);
+        CommandInvoker.getInstance().executeCommand(command);
     }
 
     public void sendToBack(Shape shape) {
-        canvasModel.sendToBack(shape);
+        SendToBackCommand command = new SendToBackCommand(canvasModel, shape);
+        CommandInvoker.getInstance().executeCommand(command);
     }
 
-    
+    // undo / redo
+    public void undo() {
+        CommandInvoker.getInstance().undo(canvasModel);
+    }
+
+    public void redo() {
+        CommandInvoker.getInstance().redo(canvasModel);
+    }
 }

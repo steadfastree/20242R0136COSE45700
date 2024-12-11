@@ -3,8 +3,9 @@ package miridih.model.objects;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.Serializable;
 
-public abstract class Shape {
+public abstract class Shape implements Serializable {
     private double startX, startY, endX, endY;
 
     public void setStart(double x, double y) {
