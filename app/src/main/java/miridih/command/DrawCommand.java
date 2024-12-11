@@ -1,8 +1,9 @@
 package miridih.command;
 
+import miridih.common.manager.PointManager;
 import miridih.model.CanvasModel;
-import miridih.model.objects.factory.ShapeFactory;
 import miridih.model.objects.Shape;
+import miridih.model.objects.factory.ShapeFactory;
 
 public abstract class DrawCommand extends UndoableCommand {
     double x, y;
@@ -17,10 +18,10 @@ public abstract class DrawCommand extends UndoableCommand {
     @Override
     public void doExecute() {
         Shape shape = this.shapeFactory.createShape();
-        shape.setStart(Math.min(canvasModel.getLastX(), x),
-                Math.min(canvasModel.getLastY(), y));
-        shape.setEnd(Math.max(canvasModel.getLastX(), x),
-                Math.max(canvasModel.getLastY(), y));
+        shape.setStart(Math.min(PointManager.getInstance().getLastX(), x),
+                Math.min(PointManager.getInstance().getLastY(), y));
+        shape.setEnd(Math.max(PointManager.getInstance().getLastX(), x),
+                Math.max(PointManager.getInstance().getLastY(), y));
         this.canvasModel.addShape(shape);
     }
 }

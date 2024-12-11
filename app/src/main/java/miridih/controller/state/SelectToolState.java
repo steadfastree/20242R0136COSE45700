@@ -1,5 +1,6 @@
 package miridih.controller.state;
 
+import miridih.common.manager.PointManager;
 import miridih.common.manager.SelectionManager;
 import miridih.controller.CanvasController;
 import miridih.model.CanvasModel;
@@ -14,7 +15,7 @@ public class SelectToolState extends ToolState {
 
     @Override
     public void mousePressed(double x, double y) {
-        canvasModel.setLastPoint(x, y);
+        PointManager.getInstance().setLastPoint(x, y);
         Shape clickedShape = canvasModel.clickShape(x, y);
         
         
@@ -34,7 +35,7 @@ public class SelectToolState extends ToolState {
 
     @Override
     public void mouseReleased(double x, double y) {
-        canvasModel.setLastPoint(x, y);
+        PointManager.getInstance().setLastPoint(x, y);
         // 이 과정에서 selectedShapes의 길이가 0이 아니라면 multiSelectedState로 이동
         if(selectionManager.getSelectedShapesSize() > 1) {
             canvasController.setCurrentTool(Tool.MULTI_SELECTED);
@@ -48,10 +49,10 @@ public class SelectToolState extends ToolState {
     @Override
     public void mouseDragged(double x, double y) {
         // 드래그 영역의 시작점과 끝점을 계산
-        double startX = Math.min(canvasModel.getLastX(), x);
-        double startY = Math.min(canvasModel.getLastY(), y);
-        double endX = Math.max(canvasModel.getLastX(), x);
-        double endY = Math.max(canvasModel.getLastY(), y);
+        double startX = Math.min(PointManager.getInstance().getLastX(), x);
+        double startY = Math.min(PointManager.getInstance().getLastY(), y);
+        double endX = Math.max(PointManager.getInstance().getLastX(), x);
+        double endY = Math.max(PointManager.getInstance().getLastY(), y);
 
         // 드래그 영역 내의 도형 선택
         for (Shape shape : canvasModel.getShapes()) {

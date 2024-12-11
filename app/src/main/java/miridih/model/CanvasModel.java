@@ -21,8 +21,6 @@ public class CanvasModel {
     private List<ShapeChangeListener> shapeChangeListeners = new ArrayList<>();
     private ArrayList<ToolChangeListener> toolChangeListeners = new ArrayList<>();
 
-    // 그리고 있는 도형의 좌표
-    private double lastX, lastY;
 
     public ArrayList<Shape> getShapes() {
         return shapes;
@@ -51,18 +49,6 @@ public class CanvasModel {
         toolChangeListeners.add(listener);
     }
 
-    public void setLastPoint(double x, double y) {
-        lastX = x;
-        lastY = y;
-    }
-
-    public double getLastX() {
-        return lastX;
-    }
-
-    public double getLastY() {
-        return lastY;
-    }
 
     public Shape clickShape(double x, double y) {
         for (int i = shapes.size() - 1; i >= 0; i--) {
