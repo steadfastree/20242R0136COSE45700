@@ -79,11 +79,13 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
 
         // HSV 만 남겨놓기
         AbstractColorChooserPanel[] panels = colorChooser.getChooserPanels();
+        
         for (AbstractColorChooserPanel accp : panels) {
             if (!accp.getDisplayName().equals("HSV")) {
                 colorChooser.removeChooserPanel(accp);
             }
         }
+
         colorChooser.setPreviewPanel(new JPanel());
 
         JComponent current = (JComponent) colorChooser.getComponents()[0];
