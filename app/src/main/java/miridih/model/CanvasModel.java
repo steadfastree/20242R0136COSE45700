@@ -119,7 +119,6 @@ public class CanvasModel {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(baos);
             oos.writeObject(this.shapes);
-            // oos.writeObject(this.selectionManager);
             oos.close();
             return Base64.getEncoder().encodeToString(baos.toByteArray());
         } catch (IOException e) {
@@ -132,7 +131,6 @@ public class CanvasModel {
             byte[] data = Base64.getDecoder().decode(state);
             ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(data));
             this.shapes = (ArrayList<Shape>) ois.readObject();
-            // this.selectionManager = (SelectionManager) ois.readObject();
             ois.close();
             notifyShapeChanged();
         } catch (ClassNotFoundException e) {

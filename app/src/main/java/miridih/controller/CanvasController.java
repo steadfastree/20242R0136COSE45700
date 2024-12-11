@@ -2,9 +2,12 @@ package miridih.controller;
 
 import java.util.ArrayList;
 
+import miridih.command.BringToFrontCommand;
 import miridih.command.CommandInvoker;
+import miridih.command.SendToBackCommand;
 import miridih.common.manager.SelectionManager;
 import miridih.controller.state.EllipseToolState;
+import miridih.controller.state.LineToolState;
 import miridih.controller.state.MultiSelectedState;
 import miridih.controller.state.RectangleToolState;
 import miridih.controller.state.SelectToolState;
@@ -78,6 +81,9 @@ public class CanvasController {
             case ELLIPSE:
                 currentToolState = new EllipseToolState(this, canvasModel);
                 break;
+            case LINE:
+                currentToolState = new LineToolState(this, canvasModel);
+                break;
             case SELECT:
                 currentToolState = new SelectToolState(this, canvasModel);
                 break;
@@ -86,6 +92,8 @@ public class CanvasController {
                 break;
             case MULTI_SELECTED:
                 currentToolState = new MultiSelectedState(this, canvasModel);
+                break;
+            default:
                 break;
         }
     }
@@ -123,11 +131,13 @@ public class CanvasController {
 
     // 도형 순서 변경
     public void bringToFront(Shape shape) {
-        canvasModel.bringToFront(shape);
+        BringToFrontCommand command = new BringToFrontCommand(canvasModel, shape);
+        CommandInvoker.getInstance().executeCommand(command);
     }
 
     public void sendToBack(Shape shape) {
-        canvasModel.sendToBack(shape);
+        SendToBackCommand command = new SendToBackCommand(canvasModel, shape);
+        CommandInvoker.getInstance().executeCommand(command);
     }
 
     // undo / redo
