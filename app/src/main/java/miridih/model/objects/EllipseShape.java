@@ -17,7 +17,7 @@ public class EllipseShape extends Shape {
 
   @Override
   public void draw(Graphics2D g2d) {
-    g2d.setColor(Color.WHITE);
+    g2d.setColor(getColor());
     g2d.fillOval((int) getStartX(), (int) getStartY(), (int) (getEndX() - getStartX()),
         (int) (getEndY() - getStartY()));
     g2d.setColor(Color.BLACK);

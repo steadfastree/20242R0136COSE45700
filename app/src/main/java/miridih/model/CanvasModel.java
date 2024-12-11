@@ -1,5 +1,6 @@
 package miridih.model;
 
+import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -20,7 +21,6 @@ public class CanvasModel {
 
     private List<ShapeChangeListener> shapeChangeListeners = new ArrayList<>();
     private ArrayList<ToolChangeListener> toolChangeListeners = new ArrayList<>();
-
 
     public ArrayList<Shape> getShapes() {
         return shapes;
@@ -48,7 +48,6 @@ public class CanvasModel {
     public void addToolChangeListener(ToolChangeListener listener) {
         toolChangeListeners.add(listener);
     }
-
 
     public Shape clickShape(double x, double y) {
         for (int i = shapes.size() - 1; i >= 0; i--) {
@@ -80,6 +79,11 @@ public class CanvasModel {
             selectedShape.setEnd(x, y);
             notifyShapeChanged();
         }
+    }
+
+    public void updateColor(Shape shape, Color color) {
+        shape.setColor(color);
+        notifyShapeChanged();
     }
 
     public void updateShape(Shape shape, double x, double y, double width, double height) {

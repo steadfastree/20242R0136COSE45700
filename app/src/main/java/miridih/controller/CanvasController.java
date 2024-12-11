@@ -1,10 +1,12 @@
 package miridih.controller;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import miridih.command.BringToFrontCommand;
 import miridih.command.CommandInvoker;
 import miridih.command.SendToBackCommand;
+import miridih.command.UpdateColorCommand;
 import miridih.command.UpdateSelectedShapeCommand;
 import miridih.common.manager.SelectionManager;
 import miridih.controller.state.EllipseToolState;
@@ -112,6 +114,13 @@ public class CanvasController {
         return canvasModel.getSelectedShapes();
     }
 
+    // 도형 색 변경
+    public void updateColor(Color color) {
+        Shape selectedShape = getSelectedShape();
+        UpdateColorCommand command = new UpdateColorCommand(canvasModel, selectedShape, color);
+        CommandInvoker.getInstance().executeCommand(command);
+    }
+
     // 도형 크기 변경
     public void resizeSelectedShape(double x, double y) {
         canvasModel.resizeSelectedShape(x, y);
@@ -122,12 +131,9 @@ public class CanvasController {
         canvasModel.moveSelectedShapes(dx, dy);
     }
 
-    // // 도형 업데이트
+    // 도형 업데이트
     public void updateSelectedShape(double x, double y, double w, double h) {
         Shape selectedShape = getSelectedShape();
-        // if (selectedShape != null) {
-        // canvasModel.updateShape(selectedShape, x, y, w, h);
-        // }
         UpdateSelectedShapeCommand command = new UpdateSelectedShapeCommand(canvasModel, selectedShape, x, y, w, h);
         CommandInvoker.getInstance().executeCommand(command);
     }

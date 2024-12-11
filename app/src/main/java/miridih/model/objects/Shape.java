@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 public abstract class Shape implements Serializable {
     private double startX, startY, endX, endY;
+    private Color color;
 
     public void setStart(double x, double y) {
         startX = x;
@@ -16,6 +17,10 @@ public abstract class Shape implements Serializable {
     public void setEnd(double x, double y) {
         endX = x;
         endY = y;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public double getStartX() {
@@ -32,6 +37,10 @@ public abstract class Shape implements Serializable {
 
     public double getEndY() {
         return endY;
+    }
+
+    public Color getColor() {
+        return color;
     }
 
     public abstract boolean contains(double x, double y);

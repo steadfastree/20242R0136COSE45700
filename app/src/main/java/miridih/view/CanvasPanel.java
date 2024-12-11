@@ -26,6 +26,7 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
     private JTextField yField;
     private JTextField widthField;
     private JTextField heightField;
+    private JColorChooser colorChooser;
 
     private CanvasPanelCommand command;
     private final SelectionManager selectionManager = SelectionManager.getInstance();
@@ -38,7 +39,7 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
         JPanel canvasPanel = new JPanel();
         canvasPanel.setLayout(new BoxLayout(canvasPanel, BoxLayout.Y_AXIS));
 
-        JColorChooser colorChooser = createColorChooser();
+        colorChooser = createColorChooser();
         xField = createInputField("X:", 0);
         yField = createInputField("Y:", 0);
         widthField = createInputField("Width:", 0);
@@ -48,6 +49,7 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
         JButton undoBtn = new JButton("Undo");
         JButton redoBtn = new JButton("Redo");
 
+        colorChooser.getSelectionModel().addChangeListener(e -> command.updateColor(colorChooser.getColor()));
         ActionListener fieldListener = e -> command.updateShapeFromPanel(
                 xField.getText(), yField.getText(), widthField.getText(), heightField.getText());
         xField.addActionListener(fieldListener);
@@ -73,7 +75,7 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
     }
 
     private JColorChooser createColorChooser() {
-        JColorChooser colorChooser = new JColorChooser(Color.BLACK);
+        JColorChooser colorChooser = new JColorChooser(Color.WHITE);
 
         // HSV 만 남겨놓기
         AbstractColorChooserPanel[] panels = colorChooser.getChooserPanels();
@@ -115,6 +117,7 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
     public void onShapeChanged() {
         if (selectionManager.getSelectedShapes().getChildren().size() == 1) {
             Shape selectedShape = selectionManager.getSelectedShapes().getChildren().get(0);
+            colorChooser.setColor(selectedShape.getColor());
             xField.setText(String.valueOf(selectedShape.getStartX()));
             yField.setText(String.valueOf(selectedShape.getStartY()));
             widthField.setText(String.valueOf(selectedShape.getWidth()));
@@ -131,6 +134,7 @@ public class CanvasPanel extends JPanel implements ShapeChangeListener, Selectio
     public void onSelectionChanged() {
         if (selectionManager.getSelectedShapes().getChildren().size() == 1) {
             Shape selectedShape = selectionManager.getSelectedShapes().getChildren().get(0);
+            colorChooser.setColor(selectedShape.getColor());
             xField.setText(String.valueOf(selectedShape.getStartX()));
             yField.setText(String.valueOf(selectedShape.getStartY()));
             widthField.setText(String.valueOf(selectedShape.getWidth()));

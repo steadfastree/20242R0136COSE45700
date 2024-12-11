@@ -1,6 +1,5 @@
 package miridih.model.objects;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class LineShape extends Shape {
@@ -18,7 +17,7 @@ public class LineShape extends Shape {
 
     System.out.println(x1 + " " + y1 + " " + x2 + " " + y2);
 
-    g2d.setColor(Color.BLACK);
+    g2d.setColor(getColor());
     g2d.drawLine(x1, y1, x2, y2);
   }
 }

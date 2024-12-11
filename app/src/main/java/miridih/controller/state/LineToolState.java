@@ -1,5 +1,7 @@
 package miridih.controller.state;
 
+import java.awt.Color;
+
 import miridih.command.CommandInvoker;
 import miridih.command.LineDrawCommand;
 import miridih.common.manager.PointManager;
@@ -20,7 +22,7 @@ public class LineToolState extends ToolState {
     @Override
     public void mouseReleased(double x, double y) {
         System.out.println(x + " " + y);
-        LineDrawCommand command = new LineDrawCommand(canvasModel, x, y);
+        LineDrawCommand command = new LineDrawCommand(canvasModel, x, y, Color.BLACK);
         CommandInvoker.getInstance().executeCommand(command);
     }
 

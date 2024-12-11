@@ -1,5 +1,7 @@
 package miridih.command;
 
+import java.awt.Color;
+
 import miridih.common.manager.SelectionManager;
 import miridih.controller.CanvasController;
 import miridih.model.objects.Shape;
@@ -49,5 +51,10 @@ public class CanvasPanelCommand implements CanvasPanelCommandInterface {
     @Override
     public void redo() {
         controller.redo();
+    }
+
+    @Override
+    public void updateColor(Color color) {
+        controller.updateColor(color);
     }
 }
