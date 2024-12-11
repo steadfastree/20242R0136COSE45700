@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import miridih.common.manager.SelectionManager;
 import miridih.controller.CanvasController;
-import miridih.model.objects.Shape;
 
 public class CanvasPanelCommand implements CanvasPanelCommandInterface {
     CanvasController controller;
@@ -16,30 +15,25 @@ public class CanvasPanelCommand implements CanvasPanelCommandInterface {
 
     @Override
     public void bringToFront() {
-        Shape selectedShape = controller.getSelectedShape();
-        controller.bringToFront(selectedShape);
+        controller.bringToFront();
     }
 
     @Override
     public void sendToBack() {
-        Shape selectedShape = controller.getSelectedShape();
-        controller.sendToBack(selectedShape);
+        controller.sendToBack();
     }
 
     @Override
     public void updateShapeFromPanel(String x, String y, String w, String h) {
-        Shape selectedShape = selectionManager.getSelectedShapes().getChildren().get(0);
-        if (selectedShape != null) {
-            try {
-                double _x = Double.parseDouble(x);
-                double _y = Double.parseDouble(y);
-                double _w = Double.parseDouble(w);
-                double _h = Double.parseDouble(h);
+        try {
+            double _x = Double.parseDouble(x);
+            double _y = Double.parseDouble(y);
+            double _w = Double.parseDouble(w);
+            double _h = Double.parseDouble(h);
 
-                controller.updateSelectedShape(_x, _y, _w, _h);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input.");
-            }
+            controller.updateSelectedShape(_x, _y, _w, _h);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input.");
         }
     }
 

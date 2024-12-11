@@ -81,27 +81,39 @@ public class CanvasModel {
         }
     }
 
-    public void updateColor(Shape shape, Color color) {
-        shape.setColor(color);
-        notifyShapeChanged();
+    public void updateColor(Color color) {
+        Shape selectedShape = getSelectedShape();
+        if (selectedShape != null) {
+            selectedShape.setColor(color);
+            notifyShapeChanged();
+        }
     }
 
-    public void updateShape(Shape shape, double x, double y, double width, double height) {
-        shape.setStart(x, y);
-        shape.setEnd(x + width, y + height);
-        notifyShapeChanged();
+    public void updateShape(double x, double y, double width, double height) {
+        Shape selectedShape = getSelectedShape();
+        if (selectedShape != null) {
+            selectedShape.setStart(x, y);
+            selectedShape.setEnd(x + width, y + height);
+            notifyShapeChanged();
+        }
     }
 
-    public void bringToFront(Shape shape) {
-        shapes.remove(shape);
-        shapes.add(shape);
-        notifyShapeChanged();
+    public void bringToFront() {
+        Shape selectedShape = getSelectedShape();
+        if (selectedShape != null) {
+            shapes.remove(selectedShape);
+            shapes.add(selectedShape);
+            notifyShapeChanged();
+        }
     }
 
-    public void sendToBack(Shape shape) {
-        shapes.remove(shape);
-        shapes.add(0, shape);
-        notifyShapeChanged();
+    public void sendToBack() {
+        Shape selectedShape = getSelectedShape();
+        if (selectedShape != null) {
+            shapes.remove(selectedShape);
+            shapes.add(0, selectedShape);
+            notifyShapeChanged();
+        }
     }
 
     public String backup() {
