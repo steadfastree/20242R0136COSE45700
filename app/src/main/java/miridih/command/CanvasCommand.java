@@ -25,11 +25,9 @@ public class CanvasCommand implements CanvasCommandInterface {
     @Override
     public void drawSelectedShapes(Graphics2D g2d) {
         ArrayList<Shape> selectedShapes = selectionManager.getSelectedShapes().getChildren();
-        selectedShapes.forEach((shape)-> {
+        selectedShapes.forEach((shape) -> {
             shape.drawSelectionBox(g2d);
             shape.drawHandle(g2d);
         });
     }
-
-
 }

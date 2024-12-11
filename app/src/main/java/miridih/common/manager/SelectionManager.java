@@ -13,11 +13,10 @@ public class SelectionManager {
   private final CompositeShape selectedShapes = new CompositeShape();
   private final List<SelectionChangeListener> listeners = new ArrayList<>();
 
+  private SelectionManager() {
+  }
 
-
-  private SelectionManager() {}
-
-  public static SelectionManager getInstance(){
+  public static SelectionManager getInstance() {
     return instance;
   }
 
@@ -53,6 +52,5 @@ public class SelectionManager {
       listener.onSelectionChanged();
     }
   }
-
 
 }
