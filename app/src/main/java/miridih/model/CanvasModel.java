@@ -1,5 +1,6 @@
 package miridih.model;
 
+import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -20,7 +21,6 @@ public class CanvasModel {
 
     private List<ShapeChangeListener> shapeChangeListeners = new ArrayList<>();
     private ArrayList<ToolChangeListener> toolChangeListeners = new ArrayList<>();
-
 
     public ArrayList<Shape> getShapes() {
         return shapes;
@@ -48,7 +48,6 @@ public class CanvasModel {
     public void addToolChangeListener(ToolChangeListener listener) {
         toolChangeListeners.add(listener);
     }
-
 
     public Shape clickShape(double x, double y) {
         for (int i = shapes.size() - 1; i >= 0; i--) {
@@ -82,22 +81,39 @@ public class CanvasModel {
         }
     }
 
-    public void updateShape(Shape shape, double x, double y, double width, double height) {
-        shape.setStart(x, y);
-        shape.setEnd(x + width, y + height);
-        notifyShapeChanged();
+    public void updateColor(Color color) {
+        Shape selectedShape = getSelectedShape();
+        if (selectedShape != null) {
+            selectedShape.setColor(color);
+            notifyShapeChanged();
+        }
     }
 
-    public void bringToFront(Shape shape) {
-        shapes.remove(shape);
-        shapes.add(shape);
-        notifyShapeChanged();
+    public void updateShape(double x, double y, double width, double height) {
+        Shape selectedShape = getSelectedShape();
+        if (selectedShape != null) {
+            selectedShape.setStart(x, y);
+            selectedShape.setEnd(x + width, y + height);
+            notifyShapeChanged();
+        }
     }
 
-    public void sendToBack(Shape shape) {
-        shapes.remove(shape);
-        shapes.add(0, shape);
-        notifyShapeChanged();
+    public void bringToFront() {
+        Shape selectedShape = getSelectedShape();
+        if (selectedShape != null) {
+            shapes.remove(selectedShape);
+            shapes.add(selectedShape);
+            notifyShapeChanged();
+        }
+    }
+
+    public void sendToBack() {
+        Shape selectedShape = getSelectedShape();
+        if (selectedShape != null) {
+            shapes.remove(selectedShape);
+            shapes.add(0, selectedShape);
+            notifyShapeChanged();
+        }
     }
 
     public String backup() {
