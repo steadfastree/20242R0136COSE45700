@@ -48,7 +48,17 @@ public class CanvasPanelCommand implements CanvasPanelCommandInterface {
     }
 
     @Override
+    public void startUpdateColor(Color color) {
+        controller.startUpdateColor(color);
+    }
+
+    @Override
     public void updateColor(Color color) {
         controller.updateColor(color);
+    }
+
+    @Override
+    public void endUpdateColor() {
+        controller.endUpdateColor();
     }
 }
