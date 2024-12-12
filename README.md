@@ -1,6 +1,7 @@
 # 고려대학교 COSE457 실전 SW 프로젝트
 
 ### 디자인 패턴을 적용한 그림판 프로그램
+![Screenshot 2024-12-11 at 9 27 26 PM](https://github.com/user-attachments/assets/bef5ec40-272f-48a2-b474-b465a83f79ab)
 
 사용 언어 : JAVA  
 라이브러리 : awt, Swing
