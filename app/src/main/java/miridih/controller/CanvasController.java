@@ -117,7 +117,6 @@ public class CanvasController {
         if (compositeCommand == null) {
             compositeCommand = new CompositeCommand(canvasModel);
             UpdateColorCommand command = new UpdateColorCommand(canvasModel, color);
-            // CommandInvoker.getInstance().executeCommand(command);
             command.execute();
             compositeCommand.addCommand(command);
         }
@@ -126,7 +125,6 @@ public class CanvasController {
     public void updateColor(Color color) {
         if (compositeCommand != null) {
             UpdateColorCommand command = new UpdateColorCommand(canvasModel, color);
-            // CommandInvoker.getInstance().executeCommand(command);
             command.execute();
             compositeCommand.addCommand(command);
         }

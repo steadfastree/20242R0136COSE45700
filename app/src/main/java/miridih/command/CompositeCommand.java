@@ -16,19 +16,18 @@ public class CompositeCommand extends UndoableCommand {
         commands.add(command);
     }
 
+    public boolean canUndo() {
+        return commands.size() > 0;
+    }
+
     @Override
     protected void doExecute() {
-        List<Command> commandsCopy = new ArrayList<>(commands);
-        for (Command command : commandsCopy) {
-            command.execute();
-        }
+        commands.getLast().execute();
     }
 
     @Override
     public void undo() {
         System.out.println(commands.size());
-        for (int i = commands.size() - 1; i >= 0; i--) {
-            commands.get(i).undo();
-        }
+        commands.getFirst().undo();
     }
 }

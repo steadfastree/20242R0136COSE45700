@@ -3,7 +3,7 @@ package miridih.command;
 import miridih.common.manager.PointManager;
 import miridih.model.CanvasModel;
 
-public class MoveSelectedShapesByDraggingCommand extends NotUndoableCommand {
+public class MoveSelectedShapesByDraggingCommand extends UndoableCommand {
   protected final PointManager pointManager;
   double x, y;
 
