@@ -17,5 +17,4 @@ public class UpdateSelectedShapeCommand extends UndoableCommand {
     protected void doExecute() {
         canvasModel.updateShape(x, y, w, h);
     }
-
 }

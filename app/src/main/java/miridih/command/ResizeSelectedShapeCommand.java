@@ -15,5 +15,4 @@ public class ResizeSelectedShapeCommand extends NotUndoableCommand {
     protected void doExecute() {
         this.canvasModel.resizeSelectedShape(this.x, this.y);
     }
-  
 }

@@ -11,18 +11,16 @@ public abstract class SelectCommand extends NotUndoableCommand {
   protected final PointManager pointManager;
   protected final CanvasController canvasController;
 
-  
-    public SelectCommand(CanvasController canvasController, CanvasModel canvasModel, double x, double y) {
-        super(canvasModel);
-        this.canvasController = canvasController;
-        this.selectionManager = SelectionManager.getInstance();
-        this.pointManager = PointManager.getInstance();
-        this.x = x;
-        this.y = y;
-    }
+  public SelectCommand(CanvasController canvasController, CanvasModel canvasModel, double x, double y) {
+    super(canvasModel);
+    this.canvasController = canvasController;
+    this.selectionManager = SelectionManager.getInstance();
+    this.pointManager = PointManager.getInstance();
+    this.x = x;
+    this.y = y;
+  }
 
-    @Override
-    protected void doExecute() {
-    }
-  
+  @Override
+  protected void doExecute() {
+  }
 }

@@ -16,7 +16,6 @@ public class Canvas extends JPanel implements ShapeChangeListener, SelectionChan
     private final CanvasCommand canvasCommand;
     private final CanvasController canvasController;
     private final CanvasEventHandler canvasEventHandler;
-    
 
     public Canvas(CanvasController controller) {
         canvasController = controller;
@@ -25,15 +24,13 @@ public class Canvas extends JPanel implements ShapeChangeListener, SelectionChan
 
         canvasController.addShapeChangeListener(this);
         canvasController.addSelectionChangeListener(this);
+
         // 배경 색
         setBackground(Color.WHITE);
 
         // 마우스 클릭 이벤트
-        
         addMouseListener(canvasEventHandler.getMouseAdapter());
         addMouseMotionListener(canvasEventHandler.getMouseAdapter());
-
-    
     }
 
     @Override

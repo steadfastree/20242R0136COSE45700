@@ -11,12 +11,10 @@ public class SelectDraggedOutCommand extends SelectCommand {
 
     @Override
     protected void doExecute() {
-        if(this.selectionManager.getSelectedShapesSize() > 1) {
-          canvasController.setCurrentTool(Tool.MULTI_SELECTED);
-      }
-      else if(this.selectionManager.getSelectedShapesSize() == 1) {
-          canvasController.setCurrentTool(Tool.SINGLE_SELECTED);
-      }
+        if (this.selectionManager.getSelectedShapesSize() > 1) {
+            canvasController.setCurrentTool(Tool.MULTI_SELECTED);
+        } else if (this.selectionManager.getSelectedShapesSize() == 1) {
+            canvasController.setCurrentTool(Tool.SINGLE_SELECTED);
+        }
     }
-  
 }

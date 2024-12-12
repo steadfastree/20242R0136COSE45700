@@ -5,14 +5,10 @@ import miridih.command.SelectDraggedOutCommand;
 import miridih.command.SelectDraggingCommand;
 import miridih.command.SelectShapeCommand;
 import miridih.common.manager.PointManager;
-import miridih.common.manager.SelectionManager;
 import miridih.controller.CanvasController;
 import miridih.model.CanvasModel;
-import miridih.model.objects.Shape;
 
 public class SelectToolState extends ToolState {
-    private final SelectionManager selectionManager = SelectionManager.getInstance();
-
     public SelectToolState(CanvasController canvasController, CanvasModel canvasModel) {
         super(canvasController, canvasModel);
     }
@@ -29,9 +25,6 @@ public class SelectToolState extends ToolState {
         PointManager.getInstance().setLastPoint(x, y);
         SelectDraggedOutCommand command = new SelectDraggedOutCommand(canvasController, canvasModel, x, y);
         CommandInvoker.getInstance().executeCommand(command);
-        // 이 과정에서 selectedShapes의 길이가 0이 아니라면 multiSelectedState로 이동
-        
-
     }
 
     @Override
@@ -41,9 +34,6 @@ public class SelectToolState extends ToolState {
     }
 
     @Override
-    public void mouseClicked(double x, double y){
-      
+    public void mouseClicked(double x, double y) {
     }
-
 }
-

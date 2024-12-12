@@ -3,16 +3,15 @@ package miridih.command;
 import miridih.model.CanvasModel;
 
 public class UndoCommand extends UndoableCommand {
-
-    private Command undidCommand;
+    private Command command;
 
     public UndoCommand(CanvasModel canvasModel, Command command) {
         super(canvasModel);
-        this.undidCommand = command;
+        this.command = command;
     }
 
     @Override
     public void doExecute() {
-        undidCommand.undo();
+        command.undo();
     }
 }

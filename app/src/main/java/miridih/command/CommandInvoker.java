@@ -37,7 +37,6 @@ public class CommandInvoker {
 
         undoCommand.execute();
         undoHistory.push(undoCommand);
-
     }
 
     public void redo(CanvasModel canvasModel) {
@@ -56,5 +55,4 @@ public class CommandInvoker {
     public boolean isRedoable() {
         return undoHistory.size() > 0;
     }
-
 }

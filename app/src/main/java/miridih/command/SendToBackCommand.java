@@ -11,5 +11,4 @@ public class SendToBackCommand extends UndoableCommand {
     public void doExecute() {
         canvasModel.sendToBack();
     }
-
 }
