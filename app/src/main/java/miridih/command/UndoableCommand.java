@@ -28,5 +28,4 @@ public abstract class UndoableCommand implements Command {
     }
 
     protected abstract void doExecute();
-
 }

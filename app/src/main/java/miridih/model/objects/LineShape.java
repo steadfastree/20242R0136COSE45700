@@ -5,7 +5,12 @@ import java.awt.Graphics2D;
 public class LineShape extends Shape {
   @Override
   public boolean contains(double x, double y) {
-    return x >= getStartX() && x <= getEndX() && y >= getStartY() && y <= getEndY();
+    double x1 = getStartX();
+    double x2 = getEndX();
+    double y1 = getStartY();
+    double y2 = getEndY();
+
+    return x >= Math.min(x1, x2) && x <= Math.max(x1, x2) && y >= Math.min(y1, y2) && y <= Math.max(y1, y2);
   }
 
   @Override

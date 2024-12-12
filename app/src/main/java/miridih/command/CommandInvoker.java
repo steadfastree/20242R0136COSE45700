@@ -30,6 +30,7 @@ public class CommandInvoker {
     }
 
     public void undo(CanvasModel canvasModel) {
+        System.out.println(executeHistory.size());
         if (!isUndoable())
             return;
         Command command = executeHistory.pop();

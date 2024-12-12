@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import miridih.command.BringToFrontCommand;
 import miridih.command.CommandInvoker;
+import miridih.command.CompositeCommand;
 import miridih.command.SendToBackCommand;
 import miridih.command.UpdateColorCommand;
 import miridih.command.UpdateSelectedShapeCommand;
@@ -29,6 +30,7 @@ public class CanvasController {
     private final SelectionManager selectionManager = SelectionManager.getInstance();
     public boolean isResizing = false;
     private ToolState currentToolState;
+    private CompositeCommand compositeCommand = null;
 
     public CanvasController(CanvasModel model) {
         canvasModel = model;
@@ -67,7 +69,7 @@ public class CanvasController {
     public void setState(ToolState state) {
         currentToolState = state;
     }
-    
+
     public void setCurrentTool(Tool tool) {
         System.out.println("setCurrentTool: " + tool);
         switch (tool) {
@@ -111,9 +113,28 @@ public class CanvasController {
     }
 
     // 도형 색 변경
+    public void startUpdateColor(Color color) {
+        if (compositeCommand == null) {
+            compositeCommand = new CompositeCommand(canvasModel);
+            UpdateColorCommand command = new UpdateColorCommand(canvasModel, color);
+            command.execute();
+            compositeCommand.addCommand(command);
+        }
+    }
+
     public void updateColor(Color color) {
-        UpdateColorCommand command = new UpdateColorCommand(canvasModel, color);
-        CommandInvoker.getInstance().executeCommand(command);
+        if (compositeCommand != null) {
+            UpdateColorCommand command = new UpdateColorCommand(canvasModel, color);
+            command.execute();
+            compositeCommand.addCommand(command);
+        }
+    }
+
+    public void endUpdateColor() {
+        if (compositeCommand != null) {
+            CommandInvoker.getInstance().executeCommand(compositeCommand);
+            compositeCommand = null;
+        }
     }
 
     // 도형 크기 변경

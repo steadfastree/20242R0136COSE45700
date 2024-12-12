@@ -128,6 +128,7 @@ public class CanvasModel {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void restore(String state) {
         try {
             byte[] data = Base64.getDecoder().decode(state);

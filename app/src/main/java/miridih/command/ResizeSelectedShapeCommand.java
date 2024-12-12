@@ -2,7 +2,7 @@ package miridih.command;
 
 import miridih.model.CanvasModel;
 
-public class ResizeSelectedShapeCommand extends NotUndoableCommand {
+public class ResizeSelectedShapeCommand extends UndoableCommand {
     double x, y;
 
     public ResizeSelectedShapeCommand(CanvasModel canvasModel, double x, double y) {
